@@ -1,0 +1,26 @@
+<% include partials/header.ejs %>
+<div class = "container"> 
+ <% for (var i = 0; i<articles.length; i++) { %>
+ <% if (articles[i].new === 'yes') { %>
+  <div class = "post" >
+  <h2 style ="text-align:center; color: blue"> <%= articles[i].title %> 
+  
+
+  </h2>
+ <% if (articles[i].image !=="") { %>
+    <img src = "<%= articles[i].image %>" >
+ <% } %> 
+  <p> <%- articles[i].highlight %> <a href = "/articles/<%= articles[i]._id.toString() %>">Read more</a></p>
+  </div>
+  <% } %>
+  <% } %>
+
+<br>
+<br>
+<% if (currentUser && currentUser.username === 'admin') { %>
+<button style="margin: auto; display: block"> <a href = "/articles/new" style = "color: inherit;">Contribute an article</a></button>
+<% } %>
+</div>
+
+  </body>
+  </html>

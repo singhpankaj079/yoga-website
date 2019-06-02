@@ -1,0 +1,97 @@
+<% include partials/header.ejs %>
+
+<div class="article">
+      <h2 style ="text-align:center; color: blue"> <%= article.title %> </h2>
+     
+ <div class="article-content">
+ <% if (article.image !=="") { %>
+        <img src = "<%= article.image %>" >
+     <% } %> 
+      <p> <%- article.content %></p>
+ </div>
+<div style="width: 80%; margin: auto; margin-bottom: 20px; height: 22px">
+       <% if (currentUser && currentUser.username === 'admin') { %>
+                  <form method="post" action="/articles/<%= article._id.toString() %>?_method=DELETE" style="width: 60px;float: right">
+                       <input class="delete" style ="width: 100%; height: 22px" type = "submit" value="Delete">
+                  </form>
+           
+                    <button class="edit" style="float: right;"> <a href = "/articles/<%= article._id.toString() %>/edit" style = "color:
+                    inherit;">Edit</a>
+                    </button>
+     <% } %>
+      
+</div>
+</div>
+     <h2 style="text-align: center; margin-top: 10px;text-decoration: underline"> Comments</h2>
+     <% for (var i = 0 ; i < comments.length; i++) { %>
+
+
+          <div class="comments"> 
+                 <div class="comment-content" style="display: block">        
+                       <p><strong><%= comments[i].author %></strong>  <%= ' - ' + comments[i].text %></p>
+                 </div>
+                 
+                     <% if (currentUser && currentUser.username === comments[i].author) { %>
+                        
+                        <div style="width: 90%; margin-left: 5%;min-height: 22px">
+                        
+                            <button class="edit" onclick="toggleDisplay('edit-comment')">Edit</button>
+                            
+                            <form method="post" action="/articles/<%= article._id.toString() %>/comments/<%= comments[i]._id.toString() %>/1?_method=DELETE" style="width: 60px;display:inline">
+                             <input class="delete" style ="width: 60px; height: 22px; display:inline" type = "submit" value="Delete">
+                            </form>
+                        
+                         </div>
+
+
+
+                         
+               
+
+                     <% }  else if (currentUser && currentUser.username !== comments[i].author) { %>
+                         <div style="width: 210px; margin-left: 5%; height: 22px">
+                                   
+                                   <button class="edit" onclick="toggleDisplay('reply1')">Reply</button>
+                            
+                                   <button class="edit" onclick="toggleDisplay('all-replies1')">View all replies(<%= comments[i].replies.length %>)</button>
+
+                         </div>
+
+                     <% } %>
+              
+               <div style="display:none" class="all-replies1">
+               
+                                 <ul type="none" style="margin: 5px; font-size: 15px">
+                                 <% for (var j =0 ; j<comments[i].replies.length; j++){ %>
+                                      <li><p style="font-family: tempus sans itc; color: #0b2d89;"><strong><%= comments[i].replies[j].author %></strong> - <%= comments[i].replies[j].reply %></p></li>
+                                 <% } %>
+                                 </ul>
+               </div>
+
+              <form class="reply1"  style="display: none"method="post" action="/articles/<%= article._id.toString() %>/comments/<%=comments[i]._id.toString()%>/1/replies" >
+                  <textarea style= "width: 100%; border: 1px solid blue" name="reply" placeholder="your comment here"></textarea>
+                  <input type="submit" value="Reply" class="edit">
+              </form>
+             
+          </div>
+    
+
+
+
+
+
+
+     <% } %>
+   <br>
+   <div style="width: 80%; margin: auto ">
+         <form method="post" action="/articles/<%= article._id.toString() %>/comment" style = "margin: auto">
+               <textarea name= "comment[text]" style="width: 80%; height: 100px; margin: auto;display: block"> </textarea>
+               <input type="submit" value="Post comment" style= "width: 100px">
+         </form>
+    </div>
+
+  
+
+
+  </body>
+  </html>

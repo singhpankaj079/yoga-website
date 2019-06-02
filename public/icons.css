@@ -1,0 +1,33 @@
+.facebook {
+	background-color: blue;
+	color: white;
+	
+	display: block; height: 40px;
+}
+.twitter {
+	background-color: #00aeff;
+	display: block; height: 40px;
+	color : white;
+}
+.youtube {
+	background-color: #b61919;
+	display: block;
+	height: 40px;
+	color: white;
+}
+.facebook:hover {
+	background-color: white ;
+	color: blue;
+	height: 40px;
+}
+
+.twitter:hover {
+	background-color: white ;
+	color: #00aeff;
+	height: 40px;
+}
+.youtube:hover {
+	background-color: white;
+	color: #b61919;
+	height: 40px;
+}

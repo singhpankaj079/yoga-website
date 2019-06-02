@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="Yoga,health,bareilly,center">
+
+    <link rel="stylesheet" href="/one.css">
+    <link rel="stylesheet" type="text/css" href="/icons.css">
+    <script type="text/javascript" src="/jquery-1.js"></script>
+    <script type="text/javascript" src="/one.js"></script>
+    <title>Mohan Yoga Bareilly</title>
+</head>
+<body >
+	<div class="navbar">  
+    <ul class= "hamburger" onclick="menu()">
+       <li class="bar"></li>
+       <li class= "bar"></li>
+       <li class= "bar"></li>
+
+    </ul>
+   		<ul class="nav"><a href="/"><li class="navbar-header">   MOHANYOGA   </li></a><a href="/"><li>  Home  </li> </a>
+			<!-- <a href="yogavid.html"><li> Yoga videos </li></a><a href="ashtanga.html"><li>Ashtanga Yoga</li></a><li>Power Yoga</li><li>  -->
+			<!-- Traditional Yoga </li><li> Discussion</li> -->
+			<a href = "#" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
+            <a href = "/videos" ><li> Videos </li></a>
+             <% if (!currentUser) { %>
+            <a href = "/signup" ><li> Sign up </li></a>
+            <a href = "/login" ><li> Login </li></a>
+             <% } else { %>                
+            <a href = "/logout" ><li> Logout </li></a>
+            <a href= "#"><li>signed in as '<%= currentUser.username %>' </li></a>
+            <% } %>
+		</ul>                <a href="/join" style="float:right; padding-top:4px;font-size: 1.2rem; margin-right: 8px"><div class="button">Join Now</div> </a>              
+            </div>                  
+
+ <ul class="menu" type="none" style="display:none">
+            <a href="/"><li class="navbar-header">   MOHANYOGA   </li></a>
+            <a href="/"><li>  Home  </li> </a>
+            <a href = "#" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
+            <a href = "/videos" ><li> Videos </li></a>
+            <% if (!currentUser) { %>
+            <a href = "/signup" ><li> Sign up </li></a>
+            <a href = "/login" ><li> Login </li></a>
+             <% } else { %>
+            <a href = "/logout" ><li> Logout </li></a>
+            <a href= "#"><li>signed in as '<%= currentUser.username %>' </li></a>
+            <% } %>
+    </ul>
+
+<br>
+<br>
+
+<% include icons.ejs %>
+<% if (error.length) { %>
+<h1 style = "background-color: #ffc2c2; color: red; text-align: center; width: 90%; margin: auto; font-size: 1.0em; margin-top:42px"> <%= error %> </h1>
+<% } %>
+

@@ -1,0 +1,22 @@
+<% include partials/header.ejs %>
+
+
+
+<form method="post" action = "/articles/<%= article._id.toString() %>?_method=PUT" style = "margin: auto; height: 100%">
+
+  <div class = "form">
+      <h1 style="text-align: center; color:purple"> YOUR ARTICLE</h1> 
+	  <input name="newart[title]" type="text" value="<%= article.title %>" title="name" required><br>
+	  <input name="newart[description]" type="text" value="<%= article.description %>"  title="description" required><br>
+	  <input name="newart[image]" type="text" value="<%= article.image %>"  title="image"><br>
+	  <textarea name = "newart[content]" style="height: 60vh; width: 80%;margin-left:10%" required><%= article.content %></textarea>
+	  <input type=submit value="SUBMIT">
+     
+  </div>
+</form>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<% include partials/header.ejs %>
+
+
+
+<form method="post" action = "/articles" style = "margin: auto; height: 100%">
+
+  <div class = "form">
+      <h1 style="text-align: center; color:purple"> YOUR ARTICLE</h1> 
+	  <input name="newart[title]" type="text" placeholder="Title" title="name" required><br>
+	  <input name="newart[description]" type="text" placeholder="Description" title="description" required><br>
+	  <input name="newart[image]" type="text" placeholder="image url(optional)" title="image"><br>
+	  <textarea name = "newart[content]" style="height: 60vh; width: 80%;margin-left:10%" required></textarea>
+	  <input type=submit value="SUBMIT">
+     
+  </div>
+</form>
+
+
+
+
+</body>
+</html>

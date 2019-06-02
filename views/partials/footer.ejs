@@ -1,0 +1,89 @@
+
+
+    
+<div class="container">
+<div class="title"><h2>STYLES OF YOGA TAUGHT IN OUR CENTER</h2></div>
+<div  class="images">
+<h3>Ashtanga Yoga</h3>
+<% if (false) { %>
+<a href="/ashtanga">      <div class="thumbnails border"> <img src='image1.jpg'></div></a>
+<% } %>
+<p>Ashtanga Vinyasa Yoga was created by K. Pattabhi Jois during the 20th century, often promoted as a modern-day form of classical Indian yoga....<a href="/ashtanga">Read more</a></p>
+<hr>
+<h3 >Power Yoga</h3>
+<% if (false) { %>
+<a href="/poweryoga">    <div class="thumbnails border"><img src='image1.jpg'> </div></a>
+<% } %>
+<p>Power Yoga is another style of yoga which has Ashtanga Yoga as its root....<a href="/poweryoga">Read more</a></p>
+<hr>
+<h3 class="imargin">Traditional Yoga</h3>
+
+<% if (false) { %>
+<a href="/traditional"><div class="thumbnails border"><img src='image1.jpg'></div></a>
+<% } %>
+<p> Traditional Yoga.. <a href="/traditional">Read more</a></p>
+</div>
+</div>
+
+
+
+
+<div class="margin-auto">
+<div class="container center">
+    <div class="title"><h2> Related Articles</h2></div>
+    <% for (var i =0; i < articles.length && i<5; i++){ %>
+        <a href="<%= articles[i].href %>"><h3> <%= articles[i].title %> </h3>    <div class="images"><div class="thumbnails border"> <img src="<%= articles[i].image %>" ></div></div>
+</a>
+     
+     <p><%- articles[i].highlight %> <a href="/articles/<%= articles[i]._id.toString() %>" > Read more </a></p>
+    <% } %>
+<button> <a href = "/articles" style = "color: inherit">Read more articles<a></button>
+<% if ( currentUser && currentUser.username === 'admin') { %>
+<button> <a href = "/articles/new" style = "color: inherit">Contribute an article<a></button>
+<% } %>
+</div>
+</div>
+
+
+
+</div>
+
+
+
+    <div class="footer">
+    <div class="aside" style="display:inline-block;">
+        <!-- lh class for list headings and li class for list items -->
+        <ul type="none">
+            <button style="width: 100%; padding: 0px;border: 0px;color:inherit" onclick="toggleDisplay('time');">
+            <li class="lh">Timings: </li> 
+            </button>
+        <li class="acontent li time">Ashtanga Yoga : 5:30 pm to 6:45 pm</li>
+        <li class="acontent li time">Power Yoga : </li>
+        <li class="acontent li time">Traditional Yoga</li>
+        </ul>
+        
+        
+        <ul type="none">
+            <button style="width: 100%; padding: 0px;border: 0px;color:inherit" onclick="toggleDisplay('centers');"><li class="lh"> Our Center:</li></button>
+        <li class="acontent li centers">Ashtanga Yoga Shala</li>
+        </ul>
+        
+        <ul type="none">
+            <button style="width: 100%; padding: 0px;border: 0px;color:inherit" onclick="toggleDisplay('address');">
+            <li class="lh">Address:</li></button>
+            <li class="acontent li address">Civil lines, Bareilly</li>
+        </ul>
+       
+
+    
+    <ul type="none">
+        <button style="width: 100%; padding: 0px;border: 0px;color:inherit" onclick="toggleDisplay('queries');"><li class="lh">Any Queries?</li></button>
+        <li class="acontent li queries">Contact us: 9410655599</li>
+        <li class="acontent li queries">Email:</li>
+        <li class="acontent li queries">mohanyoga1617@gmail.com</li>
+    
+    </ul>
+</div>
+</div>
+</body>
+</html>
