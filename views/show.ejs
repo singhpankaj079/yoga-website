@@ -28,7 +28,7 @@
 
           <div class="comments"> 
                  <div class="comment-content" style="display: block">        
-                       <p><strong><%= comments[i].author %></strong>  <%= ' - ' + comments[i].text %></p>
+                       <p><strong><a href="/profiles/<%= comments[i].author %>" style="color:inherit">  <%= comments[i].author %>   </a> </strong>  <%= ' - ' + comments[i].text %></p>
                        <form class="<%= "edit-comment" + i.toString() %>"  style="display: none"method="post" action="/articles/<%= article._id.toString() %>/comments/<%=comments[i]._id.toString()%>?_method=PUT" >
                            <textarea style= "width: 100%; border: 1px solid blue" name="text" ><%= comments[i].text %></textarea>
                             <input type="submit" value="Edit comment" class="edit">
@@ -81,7 +81,8 @@
                
                                  <ul type="none" style="margin: 5px; font-size: 15px">
                                  <% for (var j =0 ; j<comments[i].replies.length; j++){ %>
-                                      <li><p style="font-family: tempus sans itc; color: #0b2d89;"><strong><%= comments[i].replies[j].author %></strong> - <%= comments[i].replies[j].reply %>
+                                      <li><p style="font-family: tempus sans itc; color: #0b2d89;">
+                                              <strong><a href="/profiles/<%= comments[i].replies[j].author %>" style="color:inherit"><%= comments[i].replies[j].author %></a></strong> - <%= comments[i].replies[j].reply %>
                                      <% if (currentUser && currentUser.username !== comments[i].replies[j].author) { %>
                                               <button class="edit" onclick="toggleDisplay('<%= "replyc" + i.toString() + "r" + j.toString() %>')">Reply</button>
                                       <% } else if (currentUser && currentUser.username === comments[i].replies[j].author) { %>

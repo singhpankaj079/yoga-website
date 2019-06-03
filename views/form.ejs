@@ -1,7 +1,8 @@
 <% include partials/header.ejs %>
 
-
-
+<% if (success.length) { %>
+<h1 style = "background-color: #e1fae1; color: green; text-align: center; width: 90%; margin: auto; font-size: 1.0em; margin-top:42px"> <%= success %> </h1>
+<% } %>
 <form method="post" action = "/join" style = "margin: auto">
 
   <div class = "form">

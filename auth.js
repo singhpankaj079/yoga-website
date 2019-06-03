@@ -52,6 +52,9 @@ router.post('/signup', function(req, res){
         // user.occupation = req.body.occupation;
         user.address = req.body.address;
         user.mobno = req.body.mobno;
+        user.settings.mobno_visibility = true;
+        user.settings.address_visibility =true;
+        user.settings.email_visibility =true;
         user.save(function(err, saveduser){
              if(err) console.log(err);
              else console.log(saveduser);
@@ -68,11 +71,16 @@ router.post('/signup', function(req, res){
 
 // LOGGING IN 
 
-router.post('/login', passport.authenticate('local'),function(req, res){
-    if (req.isAuthenticated()) {req.flash('success', 'Successfully logged in!!');res.redirect('/');}
-    else { req.flash('error','invalid username or password!!'); res.redirect('/login');}
-
+router.post('/login', function(req, res, next){
+  req.flash('error','Invalid username or password');
+  next();
+}
+,passport.authenticate('local', {failureRedirect: '/login'}), function(req, res){
+          req.flash('error','');
+          req.flash('success','Succesfully logged in!!');
+          res.redirect('/');
 });
+
 
 
 module.exports = router;

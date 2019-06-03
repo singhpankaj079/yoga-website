@@ -83,11 +83,31 @@ router.get('/join', middlewareObj.isLoggedIn, function(req, res){
 
 // PROFILES 
 
-router.get('/profiles', middlewareObj.isAdmin, function(req, res){
+router.get('/profiles', middlewareObj.isLoggedIn, function(req, res){
      Users.find({}, function(err, users){
       if (err) console.log(err);
       else res.render('profiles', {users: users});
      });
+});
+
+
+// PROFILE OF A PARTICULAR USER
+
+router.get('/profiles/:username', middlewareObj.isLoggedIn, function(req, res){
+     Users.findOne({username: req.params.username} , function(err, user){
+      if (err) console.log(err);
+      else res.render('showprofile', {user: user});
+     });
+});
+
+
+// READING THE JOIN REQUESTS
+
+router.get('/joinrequests', middlewareObj.isAdmin, function(req, res){
+  Joinrequests.find({}, function(err, requests){
+    res.render('joinrequests', {requests: requests});
+  })
+
 });
 
 
@@ -96,9 +116,12 @@ router.get('/profiles', middlewareObj.isAdmin, function(req, res){
 router.post('/join', middlewareObj.isLoggedIn, function(req, res){
 
    var request = req.body.request;
+   request.date = new Date().toDateString();
+   request.username = req.user.username;
      Joinrequests.create(request, function(err){
 	    	if (err) console.log(err);
     });
+     req.flash('success','Join request successfully submitted');
     res.redirect('/join');
 });
 
@@ -113,9 +136,25 @@ router.post('/videos', middlewareObj.isAdmin, function(req, res){
   });
 });
 
+
+// EDITING THE PROFILE
+
+router.put('/profiles/:username', middlewareObj.checkProfileOwnership, function(req, res){
+   var user = req.body.user;
+   user.settings = { mobno_visibility: req.body.mobno_visibility, address_visibility: req.body.address_visibility, email_visibility: req.body.email_visibility};
+   Users.updateOne({username: req.params.username},{$set: user}, function(err, updated){
+    if (err) console.log(err);
+    else {
+      console.log(updated);
+      res.redirect('/profiles/'+ req.params.username);
+    }
+   })
+});
+
+
 // DELETING A VIDEO
 
-router.delete('/videos/:id', function(req, res){
+router.delete('/videos/:id', middlewareObj.isAdmin, function(req, res){
    Videos.deleteOne({_id: ObjectId(req.params.id)}, function(err, video){
     if (err)console.log(err);
     else res.redirect('/videos');

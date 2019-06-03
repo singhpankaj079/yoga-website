@@ -1,0 +1,50 @@
+<% include partials/header.ejs %>
+
+<h1 style="text-align: center; color: blue"> Profile </h1>
+<div class="profiles">
+
+		<span style="color: green"><strong><%= user.name %>(<%= user.username %>) </strong>
+		<% if (currentUser && currentUser.username === user.username){ %>
+		<button class="edit" onclick="toggleDisplay('edit-profile')">EDIT PROFILE</button>
+		<% } %>
+		</span><br>
+		<% if (user.settings.mobno_visibility || currentUser.username === 'admin' || currentUser.username === user.username) { %>
+				<span>Contact no.: <%= user.mobno %></span><br>
+				<% if (currentUser.username === user.username) { %>
+                   <span>(visible to other users: <%= user.settings.mobno_visibility %>)</span> <br>
+
+				<% } %>
+ 		<% } %>
+		<% if(user.settings.address_visibility || currentUser.username === 'admin' || currentUser.username === user.username) { %>
+				<span>Address: <%= user.address %> </span><br>
+	    <% } %>
+	    <% if (currentUser.username === user.username) { %>
+                   <span>(visible to other users: <%= user.settings.address_visibility %>)</span> <br>
+
+				<% } %>
+		<% if(user.settings.email_visibility || currentUser.username === 'admin' || currentUser.username === user.username) { %>
+				<span>Email: <%= user.email %> </span><br>
+	    <% } %>
+	    <% if (currentUser.username === user.username) { %>
+                   <span>(visible to other users: <%= user.settings.email_visibility %>)</span> <br>
+
+				<% } %>
+	</div>
+	<form method="post" action = "/profiles/<%= user.username %>?_method=PUT" style = "margin: auto">
+
+  <div class = "edit-profile" class= "form"style="display: none">
+      <h1 style="text-align: center; color:blue"> EDIT PROFILE </h1> 
+	  <input name="user[name]" type="text" placeholder="Name" title="name" value="<%=currentUser.name %>" required><br>
+	  <input name="user[mobno]" type="text" placeholder="Mobile number" title="mobile number" value="<%= currentUser.mobno %>"required><br>
+	  <input name="mobno_visibility" type="text" placeholder="visible to other users(mobno)" title="mobno visibility" value="<%= currentUser.settings.mobno_visibility %>"required><br>
+	  <input name="user[address]" type="text" placeholder="Address" title="address" value="<%=currentUser.address %>" required><br>
+	  <input name="address_visibility" type="text" placeholder="visible to other users(address)" title="address visibility" value="<%= currentUser.settings.address_visibility %>"required><br>
+	  <input name="user[email]" type="text" placeholder="Email" title="email" value="<%=currentUser.email %>" required><br>
+	  <input name="email_visibility" type="text" placeholder="visible to other users(email)" title="email visibility" value="<%= currentUser.settings.email_visibility %>"required><br>
+	  <input type=submit value="SUBMIT">
+    
+  </div>
+</form>
+
+</body>
+</html>

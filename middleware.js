@@ -64,4 +64,13 @@ middlewareObj.checkReplyOwnership = function(req, res, next){
    
 }
 
+// checkProfileOwnership MIDDLEWARE
+
+middlewareObj.checkProfileOwnership = function(req, res, next){
+  if (req.isAuthenticated() && req.user.username === req.params.username){
+    next();
+  }
+  else res.render('YOU DON\'T HAVE THE PERMISSION TO DO SO');
+}
+
 module.exports = middlewareObj;

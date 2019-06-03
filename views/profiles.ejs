@@ -3,9 +3,16 @@
 <% var len = users.length;  %>
 <% for (var i=0; i< len ; i++){ %>
 	<div class="profiles">
-		<span style="color: green"><strong><%= users[i].name %> </strong></span><br>
+		<span style="color: green"><strong><a href="/profiles/<%= users[i].username %>" style="color:inherit"><%= users[i].name %>(<%= users[i].username %>) </a></strong></span><br>
+		<% if (users[i].settings.mobno_visibility || currentUser.username === 'admin' || currentUser.username === users[i].username) { %>
 		<span>Contact no.: <%= users[i].mobno %></span><br>
-		<span>Address: <%= users[i].address %> </span><br>
+		<% } %>
+		<% if (users[i].settings.address_visibility || currentUser.username === 'admin' || currentUser.username === users[i].username) { %>
+				<span>Address: <%= users[i].address %> </span><br>
+	    <% } %>
+	    <% if (users[i].settings.email_visibility || currentUser.username === 'admin' || currentUser.username === users[i].username) { %>
+				<span>Email: <%= users[i].email %> </span><br>
+	    <% } %>
 	</div>
 <% } %>
 
