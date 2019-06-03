@@ -40,4 +40,28 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
 };
 
 
+// checkReplyOwnership MIDDLEWARE
+
+middlewareObj.checkReplyOwnership = function(req, res, next){
+   if (req.isAuthenticated()){
+    Comments.findById(ObjectId(req.params.cid), function(err, comment){
+      if (err) console.log(err);
+      else {
+         for (var i = 0; i< comment.replies.length; i++){
+          if (req.params.rid === comment.replies[i]._id.toString()){
+            if (req.user.username === comment.replies[i].author)
+              return next();
+            else res.render('YOU DON\'T HAVE THE PERMISSION TO DO SO');  
+          }
+         }
+      }
+    });
+
+   }
+   else {req.flash('error', 'Please login first');
+      res.redirect('/login');
+    }
+   
+}
+
 module.exports = middlewareObj;

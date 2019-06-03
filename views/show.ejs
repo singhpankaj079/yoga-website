@@ -29,18 +29,27 @@
           <div class="comments"> 
                  <div class="comment-content" style="display: block">        
                        <p><strong><%= comments[i].author %></strong>  <%= ' - ' + comments[i].text %></p>
+                       <form class="<%= "edit-comment" + i.toString() %>"  style="display: none"method="post" action="/articles/<%= article._id.toString() %>/comments/<%=comments[i]._id.toString()%>?_method=PUT" >
+                           <textarea style= "width: 100%; border: 1px solid blue" name="text" ><%= comments[i].text %></textarea>
+                            <input type="submit" value="Edit comment" class="edit">
+                   </form> 
                  </div>
                  
                      <% if (currentUser && currentUser.username === comments[i].author) { %>
                         
                         <div style="width: 90%; margin-left: 5%;min-height: 22px">
                         
-                            <button class="edit" onclick="toggleDisplay('edit-comment')">Edit</button>
+
+                            <button class="edit" onclick="toggleDisplay('<%= "all-replies" + i.toString() %>')">View all replies(<%= comments[i].replies.length %>)</button>
+
+                            <button class="edit" onclick="toggleDisplay('<%= "edit-comment" + i.toString() %>')">Edit</button>
                             
-                            <form method="post" action="/articles/<%= article._id.toString() %>/comments/<%= comments[i]._id.toString() %>/1?_method=DELETE" style="width: 60px;display:inline">
+                            <form method="post" action="/articles/<%= article._id.toString() %>/comments/<%= comments[i]._id.toString() %>?_method=DELETE" style="width: 60px;display:inline">
                              <input class="delete" style ="width: 60px; height: 22px; display:inline" type = "submit" value="Delete">
                             </form>
-                        
+                            
+                            
+
                          </div>
 
 
@@ -51,24 +60,50 @@
                      <% }  else if (currentUser && currentUser.username !== comments[i].author) { %>
                          <div style="width: 210px; margin-left: 5%; height: 22px">
                                    
-                                   <button class="edit" onclick="toggleDisplay('reply1')">Reply</button>
+                                   <button class="edit" onclick="toggleDisplay('<%= "reply" + i.toString() %>')">Reply</button>
                             
-                                   <button class="edit" onclick="toggleDisplay('all-replies1')">View all replies(<%= comments[i].replies.length %>)</button>
+                                   <button class="edit" onclick="toggleDisplay('<%= "all-replies" + i.toString() %>')">View all replies(<%= comments[i].replies.length %>)</button>
 
                          </div>
 
+                     <% } else { %>
+                        <div style="width: 210px; margin-left: 5%; height: 22px">
+                                   
+                                   <button class="edit" onclick="toggleDisplay('<%= "all-replies" + i.toString() %>')">View all replies(<%= comments[i].replies.length %>)</button>
+
+                         </div>
+
+
+
                      <% } %>
               
-               <div style="display:none" class="all-replies1">
+               <div style="display:none" class="<%= "all-replies" + i.toString() %>">
                
                                  <ul type="none" style="margin: 5px; font-size: 15px">
                                  <% for (var j =0 ; j<comments[i].replies.length; j++){ %>
-                                      <li><p style="font-family: tempus sans itc; color: #0b2d89;"><strong><%= comments[i].replies[j].author %></strong> - <%= comments[i].replies[j].reply %></p></li>
+                                      <li><p style="font-family: tempus sans itc; color: #0b2d89;"><strong><%= comments[i].replies[j].author %></strong> - <%= comments[i].replies[j].reply %>
+                                     <% if (currentUser && currentUser.username !== comments[i].replies[j].author) { %>
+                                              <button class="edit" onclick="toggleDisplay('<%= "replyc" + i.toString() + "r" + j.toString() %>')">Reply</button>
+                                      <% } else if (currentUser && currentUser.username === comments[i].replies[j].author) { %>
+                                              <form method="post" action="/articles/<%= article._id.toString() %>/comments/<%= comments[i]._id.toString() %>/replies/<%= comments[i].replies[j]._id.toString() %>?_method=DELETE" style="width:  60px;float: right">
+                                                 <input class="delete" style ="width: 100%; height: 22px" type = "submit" value="Delete">
+                                              </form>
+                                       <% } %>
+                                      </p>
+                                       </li>
+
+                                       <% if (currentUser && currentUser.username !== comments[i].replies[j].author ) { %>
+                                                <form class="<%= "replyc" + i.toString() + "r" + j.toString() %>"  style="display: none; width: 80%; margin:auto" method="post" action="/articles/<%= article._id.toString() %>/comments/<%=comments[i]._id.toString()%>/replies/<%= comments[i].replies[j]._id.toString() %>" >
+                                                        <textarea style= "width: 100%; border: 1px solid blue" name="reply" placeholder="your reply here"></textarea>
+                                                        <input type="submit" value="Reply" class="edit">
+                                                 </form>
+                                                 
+                                         <% } %>
                                  <% } %>
                                  </ul>
                </div>
 
-              <form class="reply1"  style="display: none"method="post" action="/articles/<%= article._id.toString() %>/comments/<%=comments[i]._id.toString()%>/1/replies" >
+              <form class="<%= "reply" + i.toString() %>"  style="display: none"method="post" action="/articles/<%= article._id.toString() %>/comments/<%=comments[i]._id.toString()%>/replies" >
                   <textarea style= "width: 100%; border: 1px solid blue" name="reply" placeholder="your comment here"></textarea>
                   <input type="submit" value="Reply" class="edit">
               </form>

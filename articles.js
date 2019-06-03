@@ -101,13 +101,58 @@ router.post('/:id/comment', middlewareObj.isLoggedIn, function(req, res){
 // POSTING REPLY CORRESPONDING TO AN ARTICLE
 
 router.post('/:aid/comments/:cid/replies', function(req, res){
-   Comments.findById(ObjectId(req.params.cid), function(err, comment){
+   
+    Comments.findById(ObjectId(req.params.cid), function(err, comment){
      comment.replies.push({ author: req.user.username, reply: req.body.reply});
      comment.save(function(err, savedcomment){
         if (err)console.log(err);
         else res.redirect('/articles/'+ req.params.aid);
      });
    });
+});
+
+
+// POSTING REPLY CORRESPONDING TO A REPLY OF AN ARTICLE
+
+router.post('/:aid/comments/:cid/replies/:rid', middlewareObj.isLoggedIn, function(req, res){
+    var reply = req.body.reply;
+    Comments.findById(ObjectId(req.params.cid), function(err, comment){
+        for (var i =0; i<comment.replies.length; i++ ){
+            if (comment.replies[i]._id.toString() === req.params.rid){
+
+                reply= '(@'  + comment.replies[i].author + ')' + ' ' + reply ;
+                comment.replies.splice(i+1,0, {author: req.user.username, reply: reply });
+                comment.save(function(err, saved){
+                    if (err) console.log(err);
+                    else res.redirect('/articles/'+ req.params.aid);
+                });
+                break;
+            }
+        }
+
+    })
+});
+
+
+// DELETING THE REPLY 
+
+router.delete('/:aid/comments/:cid/replies/:rid', middlewareObj.checkReplyOwnership, function(req, res){
+    Comments.update({ _id: ObjectId(req.params.cid)}, { $pull : {replies: {_id: ObjectId(req.params.rid) }}}, {multi: true}, function(err, deleted){
+
+        if (err) console.log(err);
+        else res.redirect('/articles/' + req.params.aid);
+    });
+});
+
+
+// UPDATING THE COMMENT
+
+router.put('/:aid/comments/:cid', function(req, res){
+    Comments.update({_id: ObjectId(req.params.cid)}, { $set: {text: req.body.text} }, function(err, comment){
+           if (err) console.log(err);
+           else res.redirect('/articles/' + req.params.aid);
+    });
+
 });
 
 

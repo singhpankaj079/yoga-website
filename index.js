@@ -83,7 +83,7 @@ router.get('/join', middlewareObj.isLoggedIn, function(req, res){
 
 // PROFILES 
 
-router.get('/profiles', function(req, res){
+router.get('/profiles', middlewareObj.isAdmin, function(req, res){
      Users.find({}, function(err, users){
       if (err) console.log(err);
       else res.render('profiles', {users: users});
