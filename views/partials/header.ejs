@@ -37,7 +37,7 @@
             <a href = "/login" ><li> Login </li></a>
              <% } else { %>                
             <a href = "/logout" ><li> Logout </li></a>
-            <a href= "/profiles/<%= currentUser.username %>"><li>'<%= currentUser.username %>' </li></a>
+            <a href= "/profiles/<%= currentUser.username %>"><li> '<%= currentUser.username %>' </li></a>
             <% } %>
 		</ul>                
         <% if (currentUser && currentUser.username === 'admin') { %> 
