@@ -1,6 +1,9 @@
 {
   "name": "yoga",
   "version": "1.0.0",
+  "engines":{
+    "node": "8.12.0"
+  },
   "description": "Ashtanga Yoga Shala Bareilly",
   "main": "app.js",
   "scripts": {
