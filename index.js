@@ -7,6 +7,7 @@ var passport = require('passport');
 var Articles = require('./models/article');
 var Videos = require('./models/video');
 var Joinrequests = require('./models/joinrequest');
+var Faqs = require('./models/faq');
 var Videos = require('./models/video');
 var Users = require('./models/user');
 var middlewareObj = require('./middleware');
@@ -111,17 +112,44 @@ router.get('/joinrequests', middlewareObj.isAdmin, function(req, res){
 });
 
 
+// ABOUT OUR CENTER
+
+router.get('/ourcenter', function(req, res){
+  res.render('ourcenter');
+});
+
+
+// FAQs
+
+router.get('/faqs', function(req, res){
+  Faqs.find({}, function(err, found){
+      if (err) console.log(err);
+      else res.render('faqs', {faqs: found});
+  })
+});
+
+
 // SUBMITTING THE JOIN FORM
 
 router.post('/join', middlewareObj.isLoggedIn, function(req, res){
 
    var request = req.body.request;
-   request.date = new Date().toDateString();
+   request.date = new Date().toString();
+   Users.findOne({username: req.user.username}, function(err, user){
+    if (err) console.log(err);
+    else {
+        user.email= request.email;
+        user.save(function(err, saved){
+          if (err) console.log(err);
+        });
+    }
+      });
+
    request.username = req.user.username;
      Joinrequests.create(request, function(err){
 	    	if (err) console.log(err);
     });
-     req.flash('success','Join request successfully submitted');
+     req.flash('success','Join request successfully submitted!!');
     res.redirect('/join');
 });
 
@@ -135,6 +163,18 @@ router.post('/videos', middlewareObj.isAdmin, function(req, res){
     else res.redirect('/videos');
   });
 });
+
+
+// ADDING A FAQ
+
+router.post('/faqs', middlewareObj.isAdmin, function(req, res){
+  var faq = req.body.faq;
+  Faqs.create(faq, function(err, added){
+    if (err) console.log(err);
+    else res.redirect('/faqs');
+  });
+});
+
 
 
 // EDITING THE PROFILE
@@ -161,4 +201,24 @@ router.delete('/videos/:id', middlewareObj.isAdmin, function(req, res){
    });
 });
 
+// DELETING A JOIN REQUESTS
+
+router.delete('/joinrequests/:id', middlewareObj.isAdmin, function(req, res){
+  Joinrequests.deleteOne({ _id: ObjectId(req.params.id) }, function(err, deleted){
+    if (err) console.log(err);
+    else {
+        res.redirect('/joinrequests');
+    }
+  })
+});
+
+
+// DELETING A FAQ
+
+router.delete('/faqs/:id', middlewareObj.isAdmin, function(req, res){
+   Faqs.deleteOne({_id: ObjectId(req.params.id)}, function(err, deleted){
+    if (err) console.log(err);
+    else res.redirect('/faqs');
+   });
+});
 module.exports = router;

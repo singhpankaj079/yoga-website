@@ -119,7 +119,8 @@ a:hover {
 
 }
 img {
-	
+	border: 1px solid grey;
+	padding: 2px;
 	max-width: 100%;
     max-height: 252px;
     margin: auto;
@@ -151,6 +152,7 @@ img {
     border-radius: 0.5rem;
     height: auto;
     box-sizing: border-box;
+    
   
 
 	display: inline-block;
@@ -168,6 +170,10 @@ hr {
 	padding-left:3%;
 	color: purple;
 	text-align: center;
+	transition: transform 0.1s;
+}
+.title:hover {
+	transform: scale(1.2);
 }
 .right {
 	width: 60%;
@@ -233,20 +239,30 @@ hr {
 	border-radius:8px;
 	text-align: center;
 	color: #230326;
-	font-weight:700;
+	/*font-weight:700;*/
 	display: inline-block;	
 	background-color: rgb(19,136,251,1);
     transition: transform 0.1s;
-    float:right;
-    width: 100px;
+    /*width: 100px;*/
     height: 30px;
 	font-size: 1.0em;
 	padding-top: 4px;
 	box-sizing: border-box;
+	border: 1px solid rgb(19,136,251,1);
+	margin: auto;
 }
 
+h1 {
+	transition: transform 0.1s;
+	box-sizing: border-box;
 
+}
+h1:hover {
+	transform: 
+}
+.animation-element {
 
+}
 h3 {
 	margin-bottom: 1%;
 	color: green;
@@ -281,11 +297,11 @@ h2 {
 	margin:1%;
 	margin-top:4%;
 	font-size: 1.2rem;
-	/*transition: transform 0.2s;*/
+	transition: transform 0.2s;
 }
 h2:hover {
 
-	/*transform: scale(1.5);*/
+	transform: scale(1.5);
 }
 iframe:hover {
 	/*transform: scale(1.1);*/
@@ -482,6 +498,24 @@ input[type="submit"] {
 	width: 80%;
 	margin: auto;
 }
+.faqs {
+	width: 90%;
+	margin: auto;
+}
+.faqs h1 {
+	color: #001699;
+	text-align: center;
+}
+.faqq {
+	padding-left: 2px;
+	font-size: 1.2em;
+	color: green;
+}
+.faqa {
+	padding-left: 2px;
+	font-size: 1.2em;
+	margin-bottom: 20px;
+}
 @media screen and (max-width:800px) {
 	.left {
 		width: 95%;
@@ -515,7 +549,6 @@ input[type="submit"] {
 
 @media screen and (max-width:480px){
 	.button{
-		width: 100px;
 		height: 30px;
 		font-size: 1.0em;
 		padding-top: 4px;
@@ -545,4 +578,13 @@ input[type="submit"] {
 		margin-top: 0px;
 		margin-bottom: 0px;
 	}
+}
+
+[data-aos=fade-right] {
+ transform:translate3d(-100px,0,0)
+}
+
+[data-aos][data-aos][data-aos-easing=ease-in-sine],
+body[data-aos-easing=ease-in-sine] [data-aos] {
+ transition-timing-function:cubic-bezier(.47,0,.745,.715)
 }

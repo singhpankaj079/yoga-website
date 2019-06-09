@@ -2,11 +2,16 @@
 <h1 style="text-align: center; color: blue"> Join requests </h1>
 <% for (var i=0; i<requests.length; i++){ %>
 	<div class="profiles">
-		    <span style="color: green"><a href="/profiles/<%=requests[i].username %>" style="color:inherit"><%= requests[i].username %></a> </span> <br>
+		    <span style="color: green"><a href="/profiles/<%=requests[i].username %>" style="color:inherit"><%= requests[i].username %></a> 
+		    </span> <form method="post" action="/joinrequests/<%= requests[i]._id.toString() %>?_method=DELETE" style="width: 60px;display:inline">
+                             <input class="delete" style ="width: 60px; height: 22px; display:inline" type = "submit" value="Delete">
+                            </form><br>
 			<span><%= requests[i].name %> </span> <br>
 			<span><%= requests[i].mobno %></span><br>
 			<span><%= requests[i].address %></span><br>
 			<span><%= requests[i].email %></span><br>
+			<span><%= requests[i].style %> </span><br>
+			<span><%= requests[i].time %> </span><br>
 			<span><%= requests[i].purpose %></span><br>
 			<span><%= requests[i].date %> </span><br>
 	</div>

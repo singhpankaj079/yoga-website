@@ -3,14 +3,20 @@
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="Keywords" content="Yoga,health,bareilly,center">
-
+     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/one.css">
     <link rel="stylesheet" type="text/css" href="/icons.css">
+    <script type="text/javascript" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script type="text/javascript" src="/jquery-1.js"></script>
     <script type="text/javascript" src="/one.js"></script>
-    <title>Mohan Yoga Bareilly</title>
+    <title>Ashtanga Yoga Shala</title>
 </head>
 <body >
+    <script> AOS.init({
+     duration: 500,
+     once: true
+    }); </script>
 	<div class="navbar">  
     <ul class= "hamburger" onclick="menu()">
        <li class="bar"></li>
@@ -18,38 +24,42 @@
        <li class= "bar"></li>
 
     </ul>
-   		<ul class="nav"><a href="/"><li class="navbar-header">   MOHANYOGA   </li></a><a href="/"><li>  Home  </li> </a>
+   		<ul class="nav">
+            <!-- <a href="/"><li class="navbar-header">   MOHANYOGA   </li></a> -->
+            <a href="/"><li>  Home  </li> </a>
 			<!-- <a href="yogavid.html"><li> Yoga videos </li></a><a href="ashtanga.html"><li>Ashtanga Yoga</li></a><li>Power Yoga</li><li>  -->
 			<!-- Traditional Yoga </li><li> Discussion</li> -->
-			<a href = "#" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
+			<a href = "/ourcenter" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
             <a href = "/videos" ><li> Videos </li></a>
+            <a href= "/faqs"><li>FAQs</li></a>
              <% if (!currentUser) { %>
             <a href = "/signup" ><li> Sign up </li></a>
             <a href = "/login" ><li> Login </li></a>
              <% } else { %>                
             <a href = "/logout" ><li> Logout </li></a>
-            <a href= "/profiles/<%= currentUser.username %>"><li>signed in as '<%= currentUser.username %>' </li></a>
+            <a href= "/profiles/<%= currentUser.username %>"><li>'<%= currentUser.username %>' </li></a>
             <% } %>
 		</ul>                
         <% if (currentUser && currentUser.username === 'admin') { %> 
         <a href="/joinrequests" style="float:right; padding-top:4px;font-size: 1.2rem; margin-right: 8px"><div class="button" style="width: 180px">Join Requests</div> </a> 
         <% } else { %>
-        <a href="/join" style="float:right; padding-top:4px;font-size: 1.2rem; margin-right: 8px"><div class="button">Join Now</div> </a>
+        <a href="/join" style="float:right; padding-top:4px;font-size: 1.2rem; margin-right: 8px"><div class="button" style="padding: 4px">Join Now</div> </a>
         <% } %>
 
             </div>                  
 
  <ul class="menu" type="none" style="display:none">
-            <a href="/"><li class="navbar-header">   MOHANYOGA   </li></a>
+            <!-- <a href="/"><li class="navbar-header">   MOHANYOGA   </li></a> -->
             <a href="/"><li>  Home  </li> </a>
-            <a href = "#" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
+            <a href = "/ourcenter" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
             <a href = "/videos" ><li> Videos </li></a>
+            <a href= "/faqs"><li>FAQs</li></a>
             <% if (!currentUser) { %>
             <a href = "/signup" ><li> Sign up </li></a>
             <a href = "/login" ><li> Login </li></a>
              <% } else { %>
             <a href = "/logout" ><li> Logout </li></a>
-            <a href= "/profiles/<%= currentUser.username %>"><li>signed in as '<%= currentUser.username %>' </li></a>
+            <a href= "/profiles/<%= currentUser.username %>"><li>'<%= currentUser.username %>' </li></a>
             <% } %>
     </ul>
 

@@ -1,7 +1,7 @@
 
 
     
-<div class="container">
+<div class="container animationelement" data-aos="fade-right">
 <div class="title"><h2>STYLES OF YOGA TAUGHT IN OUR CENTER</h2></div>
 <div  class="images">
 <h3>Ashtanga Yoga</h3>
@@ -28,18 +28,18 @@
 
 
 
-<div class="margin-auto">
+<div class="margin-auto" data-aos="fade-left">
 <div class="container center">
     <div class="title"><h2> Related Articles</h2></div>
     <% for (var i =0; i < articles.length && i<5; i++){ %>
-        <a href="<%= articles[i].href %>"><h3> <%= articles[i].title %> </h3>    <div class="images"><div class="thumbnails border"> <img src="<%= articles[i].image %>" ></div></div>
+        <a href="<%= articles[i].href %>"><h3> <%= articles[i].title %> </h3>     <img src="<%= articles[i].image %>" </div>
 </a>
      
      <p><%- articles[i].highlight %> <a href="/articles/<%= articles[i]._id.toString() %>" > Read more </a></p>
     <% } %>
-<button> <a href = "/articles" style = "color: inherit">Read more articles<a></button>
+<button class="button"> <a href = "/articles" style = "color: inherit">Read more articles<a></button>
 <% if ( currentUser && currentUser.username === 'admin') { %>
-<button> <a href = "/articles/new" style = "color: inherit">Contribute an article<a></button>
+<button class="button"> <a href = "/articles/new" style = "color: inherit">Contribute an article<a></button>
 <% } %>
 </div>
 </div>
@@ -50,16 +50,17 @@
 
 
 
-    <div class="footer">
+    <div class="footer" data-aos="zoom-in" >
     <div class="aside" style="display:inline-block;">
         <!-- lh class for list headings and li class for list items -->
         <ul type="none">
             <button style="width: 100%; padding: 0px;border: 0px;color:inherit" onclick="toggleDisplay('time');">
             <li class="lh">Timings: </li> 
             </button>
-        <li class="acontent li time">Ashtanga Yoga : 5:30 pm to 6:45 pm</li>
-        <li class="acontent li time">Power Yoga : </li>
-        <li class="acontent li time">Traditional Yoga</li>
+        <li class="acontent li time">Ashtanga Yoga : 8:15 to 9:30am,</li>
+        <li class="acontent li time">5:15 to 6:30pm</li>
+        <li class="acontent li time">Power Yoga : 7:30 to 8:15am</li>
+        <li class="acontent li time">Traditional Yoga : 6:45 to 7:30am</li>
         </ul>
         
         
@@ -71,6 +72,8 @@
         <ul type="none">
             <button style="width: 100%; padding: 0px;border: 0px;color:inherit" onclick="toggleDisplay('address');">
             <li class="lh">Address:</li></button>
+            <li class="acontent li address">Pilot Shefali Chowdhary Road,</li>
+            <li class="acontent li address">Balwant Singh Marg,</li>
             <li class="acontent li address">Civil lines, Bareilly</li>
         </ul>
        
@@ -78,7 +81,7 @@
     
     <ul type="none">
         <button style="width: 100%; padding: 0px;border: 0px;color:inherit" onclick="toggleDisplay('queries');"><li class="lh">Any Queries?</li></button>
-        <li class="acontent li queries">Contact us: 9410655599</li>
+        <li class="acontent li queries">Contact us: 9897069927</li>
         <li class="acontent li queries">Email:</li>
         <li class="acontent li queries">mohanyoga1617@gmail.com</li>
     

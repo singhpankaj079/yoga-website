@@ -1,3 +1,5 @@
+
+
 function menu() {
 	var menu = $('.menu')[0];
 	if (menu.style.display !=='none') {

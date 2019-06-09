@@ -23,7 +23,7 @@ middlewareObj.isLoggedIn = function (req, res, next){
 middlewareObj.isAdmin = function (req, res, next){
   if (req.isAuthenticated() && req.user.username === 'admin')
     return next();
-  else res.send('SORRY ONLY ADMIN HAS THE RIGHT TO DO SO');
+  else res.send('SORRY YOU DON\'T HAVE THE PERMISSION TO DO SO' );
 }
 
 
@@ -36,7 +36,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
 			next();
 		else res.send('Either you are not logged in or you don\'t have the required permission');
 	});
-	
+
 };
 
 
