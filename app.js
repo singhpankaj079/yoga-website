@@ -58,7 +58,7 @@ app.use(passport.session());
 // SETTING UP THE MONGOOSE
 
 mongoose.set('debug', true);
-mongoose.connect(DBPATH, {useNewUrlParser: true});
+mongoose.connect(process.env.DATABASEURL, {useNewUrlParser: true});
 var ObjectId = mongoose.Types.ObjectId;
 
 // 'mongodb://localhost/yoga'
