@@ -58,9 +58,10 @@ app.use(passport.session());
 // SETTING UP THE MONGOOSE
 
 mongoose.set('debug', true);
-mongoose.connect('mongodb://localhost/yoga', {useNewUrlParser: true});
+mongoose.connect(DBPATH, {useNewUrlParser: true});
 var ObjectId = mongoose.Types.ObjectId;
 
+// 'mongodb://localhost/yoga'
 
 // SETTING UP THE ROUTES
 
@@ -71,7 +72,7 @@ app.use(authRoutes);
 
 // STARTING THE SERVER
 
-app.listen(3000, (req, res) => {
+app.listen(process.env.PORT, process.env.IP, (req, res) => {
     console.log('server is listening');
 });
 
