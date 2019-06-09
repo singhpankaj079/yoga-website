@@ -13,7 +13,7 @@
   "author": "Pankaj Singh",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^6.4.1",
+    "body-parser": "^1.19.10",
     "connect-flash": "^0.1.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
