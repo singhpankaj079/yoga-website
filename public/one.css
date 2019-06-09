@@ -579,12 +579,3 @@ input[type="submit"] {
 		margin-bottom: 0px;
 	}
 }
-
-[data-aos=fade-right] {
- transform:translate3d(-100px,0,0)
-}
-
-[data-aos][data-aos][data-aos-easing=ease-in-sine],
-body[data-aos-easing=ease-in-sine] [data-aos] {
- transition-timing-function:cubic-bezier(.47,0,.745,.715)
-}
