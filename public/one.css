@@ -516,6 +516,11 @@ input[type="submit"] {
 	font-size: 1.2em;
 	margin-bottom: 20px;
 }
+.images {
+	width: 95vw;
+    margin: auto;
+    margin-top: 44px;
+}
 @media screen and (max-width:800px) {
 	.left {
 		width: 95%;

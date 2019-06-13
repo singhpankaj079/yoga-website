@@ -10,12 +10,28 @@ var Joinrequests = require('./models/joinrequest');
 var Faqs = require('./models/faq');
 var Videos = require('./models/video');
 var Users = require('./models/user');
+var Images = require('./models/image');
 var middlewareObj = require('./middleware');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
+var multer = require('multer');
+var fs = require('fs');
+
+// SETTING UP THE STORAGE FOR THE UPLOADED FILES
+
+var Storage = multer.diskStorage({
+  destination: function(req, file, callback){
+    callback(null, './public/images');
+   },
+   filename: function(req, file, callback){
+    callback(null, file.originalname);
+   }
+});
+
+// UPLOAD OBJECT (CREATING AN ARRAY)
+var upload = multer({storage: Storage}).single('filetoupload');
 
 // TO PASS 'user' OBJECT TO ALL THE EJS TEMPLATES
-
 
 router.use(function(req, res, next){
    res.locals.currentUser = req.user;
@@ -129,6 +145,16 @@ router.get('/faqs', function(req, res){
 });
 
 
+// IMAGES
+
+router.get('/images', function(req, res){
+   Images.find({}, function(err, images){
+    if (err) console.log(err);
+    else res.render('images', {images: images});
+   });
+});
+
+
 // SUBMITTING THE JOIN FORM
 
 router.post('/join', middlewareObj.isLoggedIn, function(req, res){
@@ -176,6 +202,24 @@ router.post('/faqs', middlewareObj.isAdmin, function(req, res){
 });
 
 
+// UPLOADING IMAGES
+
+router.post('/images', middlewareObj.isAdmin, function(req, res){
+   upload(req, res, function(err){
+    if (err) console.log(err);
+    else {
+      console.log(req);
+      Images.create({title: req.file.originalname, url: 'images/' + req.file.originalname}, function(err, saved){
+        if (err) res.render('Something went wrong');
+        
+      });
+
+      req.flash('success', 'file uploaded successfully');
+      res.redirect('/images');
+    }
+   })
+});
+
 
 // EDITING THE PROFILE
 
@@ -220,5 +264,23 @@ router.delete('/faqs/:id', middlewareObj.isAdmin, function(req, res){
     if (err) console.log(err);
     else res.redirect('/faqs');
    });
+});
+
+// DELETING UPLOADED IMAGE
+
+router.delete('/images/:id', middlewareObj.isAdmin, function(req, res){
+   Images.findById(req.params.id, function(err, image){
+    if (err) console.log(err);
+    fs.unlink('./public/images/'+ image.title, function(err){
+      if (err) console.log(err);
+    });
+   });
+    Images.deleteOne({ _id: ObjectId(req.params.id) }, function(err, deleted){
+      if (err) console.log(err);
+      else {
+        req.flash('success', 'Successfully deleted!!');
+        res.redirect('/images');
+      }
+    });
 });
 module.exports = router;
