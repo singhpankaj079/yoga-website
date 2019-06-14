@@ -214,7 +214,7 @@ router.post('/images', middlewareObj.isAdmin, function(req, res){
         
       });
 
-      req.flash('success', 'file uploaded successfully');
+      req.flash('success', 'file uploaded successfully!!');
       res.redirect('/images');
     }
    })

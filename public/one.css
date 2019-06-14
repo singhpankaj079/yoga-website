@@ -121,12 +121,12 @@ a:hover {
 img {
 	border: 1px solid grey;
 	padding: 2px;
-	max-width: 95%;
-    max-height: 252px;
+	max-width: 90%;
+	max-height: 800px;
     margin: auto;
     display: block;
 }
-.images {
+.styles {
 	
 	width: 80%;
 	margin: auto;
