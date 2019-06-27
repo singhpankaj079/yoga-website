@@ -6,7 +6,10 @@ var mongoose = require('mongoose');
 
 var imageSchema = new mongoose.Schema({
 	title: String,
-	url: String
+	url: String,
+	visibility: Boolean,
+	slideshow: Boolean,
+	description: String
 });
 
 

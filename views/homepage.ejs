@@ -1,10 +1,54 @@
 
 <% include partials/header.ejs %>
 <% include partials/jumbo.ejs %>
+
+
 <% if (success.length) { %>
 <h1 style = "background-color: #e1fae1; color: green; text-align: center; width: 90%; margin: auto; font-size: 1.0em; margin-top:42px"> <%= success %> </h1>
 <% } %>
+<div class="slideshow">
+	
+
+	<% for (var i=0;i<images.length;i++){ %>
+             <div class="picture fade">
+                     <img src = "<%= images[i].url %>" onmouseenter="stopShow()" onmouseleave="startShow()">	    
+                      <% if (images[i].description) { %>
+                      <div class="slideshowtext"><%= images[i].description %></div>
+                      <% } %>
+                      <span style="position: absolute; top:0px; left: 5%"> <%= i+1%> / <%= images.length %> </span>   
+	         </div>
+	
+
+<% } %>
+
+      <button id="previousbutton" onclick="nextSlide()">&#10094</button>
+	  <button id="nextbutton" onclick="previousSlide()">&#10095</button>
+
+</div>
+
+
+<br>
+<hr style="max-width: 600px">
+
 <div class="left">
+
+<div class="container">
+  <h1 style="text-align:center;color:purple;"><pre style="letter-spacing:2px"> <i class="fa fa-clock-o" style="display:inline;font-size:20px"></i> Timings </pre></h1>
+       <ul type="none" style="text-align: center; margin:auto">
+           
+        <li><h2 style="color:green">Ashtanga Yoga</h2></li>
+        <li> 8:15 - 9:30 am</li>
+        <li>5:15 - 6:30 pm</li>
+        <hr style="width: 200px">
+        <li><h2 style="color:green">Power Yoga</h2></li>
+        <li> 7:30 - 8:15 am</li>
+        <hr style="width: 200px">
+        <li><h2 style="color:green">Traditional Yoga</h2></li>
+        <li> 6:45 - 7:30 am</li>
+        </ul>
+
+</div>
+
 <div class="container" data-aos="fade-left">
 	
 	<div class="title"> <h2>WHAT IS YOGA? </h2></div>
@@ -24,15 +68,16 @@ physical therapy routine, and as a regime to strengthen and balance all parts of
 </p>
 <p>
 At our center we teach mainly three styles 
-of yoga which are some of the most populest forms of yoga namely- Traditional Yoga (native form of India),Power Yoga(modified form) and 
-Ashtanga Yoga(modified form).
-You can join our center for treatment of hypertension(high blood pressure), obesity and depression.Many people who have joined our center have been greatly benefitted.
+of yoga which are some of the most populest forms of yoga namely- Traditional Yoga, Power Yoga and 
+Ashtanga Yoga.
+You can join our center for treatment of hypertension(high blood pressure), obesity, depression or for general fitness.Many people who have joined our center have been greatly benefitted.
 </p> 
 
 <br>
 
 </div>
 
+<script> slideShow();</script>
 <% include partials/footer.ejs %>
  
 

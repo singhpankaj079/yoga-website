@@ -72,7 +72,7 @@ router.post('/signup', function(req, res){
 // LOGGING IN 
 
 router.post('/login', function(req, res, next){
-  req.flash('error','Invalid username or password');
+  req.flash('error','Invalid username or password!!');
   next();
 }
 ,passport.authenticate('local', {failureRedirect: '/login'}), function(req, res){

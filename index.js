@@ -16,9 +16,15 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 var multer = require('multer');
 var fs = require('fs');
+const Gcloud = require("@google-cloud/storage");
+
+const gstorage =  new Gcloud.Storage({projectId: 'ashtanga-yoga-shala'});
+// gstorage.projectId='ashtanga-yoga-shala';
+const bucket = gstorage.bucket('ashtanga-yoga-shala');
+
 
 // SETTING UP THE STORAGE FOR THE UPLOADED FILES
-
+/*
 var Storage = multer.diskStorage({
   destination: function(req, file, callback){
     callback(null, './public/images');
@@ -27,7 +33,45 @@ var Storage = multer.diskStorage({
     callback(null, file.originalname);
    }
 });
+*/
+var datenow;
+// MIDDLEWARE TO UPLOAD IMAGES TO GOOGLE CLOUD STORAGE
 
+function sendUploadToGCS (req, res, next) {
+  if (!req.file) {
+    return next();
+  }
+   datenow= Date.now();
+  const gcsname = datenow + req.file.originalname;
+  const file = bucket.file(gcsname);
+
+  const stream = file.createWriteStream({
+    metadata: {
+      contentType: req.file.mimetype
+    },
+    resumable: false
+  });
+
+  stream.on('error', (err) => {
+    req.file.cloudStorageError = err;
+    next(err);
+  });
+
+  stream.on('finish', () => {
+    req.file.cloudStorageObject = gcsname;
+    file.makePublic().then(() => {
+      req.file.cloudStoragePublicUrl = getPublicUrl(gcsname)+ "?key=AIzaSyCCgPFXD7dVfWvKF5ltT7cyxJ5dx-cmbj0";
+      next();
+    });
+  });
+
+  stream.end(req.file.buffer);
+}
+function getPublicUrl (filename) {
+  return 'https://storage.googleapis.com/ashtanga-yoga-shala/' + filename;
+}
+
+var Storage = multer.memoryStorage();
 // UPLOAD OBJECT (CREATING AN ARRAY)
 var upload = multer({storage: Storage}).single('filetoupload');
 
@@ -44,8 +88,14 @@ router.use(function(req, res, next){
 router.get('/', function(req, res) {
 	  Articles.find({}, function(err, articles){
   	if (err) console.log(err);
-  	else res.render('homepage', { articles: articles});
-  });
+  	else {
+      Images.find({slideshow: true}, function(err, images){
+    if (err) console.log(err);
+    else res.render('homepage', { articles: articles, images: images});
+   });
+      
+  }
+});
 });
 
 
@@ -155,6 +205,40 @@ router.get('/images', function(req, res){
 });
 
 
+// REMOVING A IMAGE FROM SLIDESHOW LIST
+
+router.get('/images/:id/toggleslideshow', middlewareObj.isAdmin, function(req, res){
+   Images.findById(ObjectId(req.params.id),function(err, found){
+       if (err) console.log(err);
+       else { 
+       found.slideshow = !found.slideshow;
+         found.save(function(err, saved){
+          if (err) console.log(err);
+          else {  req.flash("success", "Successfully changed slideshow visibility");res.redirect("/images");}
+         
+         });
+        }
+       
+   });
+});
+
+// CHANGING IMAGE VISIBILITY TO OTHER USERS
+
+router.get('/images/:id/togglevisibility', middlewareObj.isAdmin, function(req, res){
+   Images.findById(ObjectId(req.params.id),function(err, found){
+       if (err) console.log(err);
+       else { 
+       found.visibility = !found.visibility;
+         found.save(function(err, saved){
+          if (err) console.log(err);
+          else {  req.flash("success", "Successfully changed image visibility");res.redirect("/images");}
+         
+         });
+        }
+       
+   });
+});
+
 // SUBMITTING THE JOIN FORM
 
 router.post('/join', middlewareObj.isLoggedIn, function(req, res){
@@ -204,20 +288,25 @@ router.post('/faqs', middlewareObj.isAdmin, function(req, res){
 
 // UPLOADING IMAGES
 
-router.post('/images', middlewareObj.isAdmin, function(req, res){
-   upload(req, res, function(err){
-    if (err) console.log(err);
-    else {
-      console.log(req);
-      Images.create({title: req.file.originalname, url: 'images/' + req.file.originalname}, function(err, saved){
+router.post('/images', middlewareObj.isAdmin, upload, sendUploadToGCS, function(req, res){
+      if (req.file && req.file.cloudStoragePublicUrl){
+         var image ={ title: datenow + req.file.originalname, url: getPublicUrl(datenow + req.file.originalname)};
+      image.visibility=true;
+      image.slideshow =true;
+      image.description=req.body.description;
+      //console.log(req);
+      console.log("here");
+      Images.create(image, function(err, saved){
         if (err) res.render('Something went wrong');
-        
-      });
+});
 
       req.flash('success', 'file uploaded successfully!!');
       res.redirect('/images');
+      }
+    else {
+      res.render('Something went wrong');
     }
-   })
+  
 });
 
 
@@ -271,10 +360,12 @@ router.delete('/faqs/:id', middlewareObj.isAdmin, function(req, res){
 router.delete('/images/:id', middlewareObj.isAdmin, function(req, res){
    Images.findById(req.params.id, function(err, image){
     if (err) console.log(err);
-    fs.unlink('./public/images/'+ image.title, function(err){
+    const file = bucket.file(image.title);
+    file.delete(function(err, apiresponse){
       if (err) console.log(err);
     });
-   });
+    
+});
     Images.deleteOne({ _id: ObjectId(req.params.id) }, function(err, deleted){
       if (err) console.log(err);
       else {

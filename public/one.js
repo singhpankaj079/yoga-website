@@ -18,3 +18,35 @@ function toggleDisplay(className) {
 	else $(obj).css('display','none');
 
 }
+
+var images;
+var index = 0;
+var timeout;
+
+function slideShow(){
+	images = document.getElementsByClassName("picture");
+	images[index].style.display ="none";
+	index = (index+1)%images.length;
+	images[index].style.display="block";
+	timeout=setTimeout(slideShow , 3000);
+
+}
+
+function stopShow(){
+	clearTimeout(timeout);
+}
+function startShow(){
+	timeout = setTimeout(slideShow, 3000);
+}
+
+function previousSlide(){
+	clearTimeout(timeout);
+	images[index].style.display="none";
+	index=(index-2+images.length)%images.length;
+	slideShow();
+}
+
+function nextSlide(){
+    clearTimeout(timeout);
+    slideShow();
+}

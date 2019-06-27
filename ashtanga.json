@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "ashtanga-yoga-shala",
+  "private_key_id": "724ccfc7f22e6816ed4659168d7984b31df94698",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDUVoFDOSFi4K/n\nROkIxNUaO+1cYWsvx+DDJkQKSdFqZj2FyXEsqmuLgJyvCk12WF/f2nr8SIXcBrGN\nZY9FFdM5nwIeTcN8twRLs9BDs384/xw8CDukqNIaOPkhA8xWKeV0xsev6Fsyh+ZL\nBNvYt6a+Ql57XPzr6SIJKOnX+nyBcoKOJ9MpzPT2T8qGyWPR7afNB4n0NFeLptYy\niyShnmv7fSdGnTVw1z7BuRZMHxZXXgevwahlrpVYvDY6jUK72z4F87WClUEKi/FZ\nBnIjUv4/3qwa2pNkUt7VQbsaD+YW5zQx2C4nDvnQguCATONPd3vpgpJjdJtR2bm/\nH40WWr/1AgMBAAECggEADVQCDcfSlP6eK/nDAt46s3MwL/dGyhtVZrUf2jbN9/bD\nmoKNdwyaGYnmIS/tXXtTRp1+e2118YdTXRkTMsvu6T6rhwlsjDHUtDJs5S2pfli3\nsKZM+sXvV4lcoeTiI5ps9l/afZaBJZ0q0xSn/robCPWThqd3PLudJk60zENtzeuB\nKgxEbBu9r46qHTQWjfaMvI0fgkaRfJVOtty58spMixmuY9x6cz+FOvsqRdruofMD\nwkkSIzFljcYOHAcTv4ID5Gc0TDMuLp7gZismVslEJRlT3U0Ik1NWenGsqnN07e4m\nq2p66BazVeZbOCQypb1ehxC8tSaIvp7PYF/imDWh9QKBgQD19h7BOlW2k47iLS6l\nLd7DId8tiHKrCgNKX89g/hyawtqtOqsN83LuLKOFICfh6cPscxfe2sgT53q3ARVz\nv3Yy21JdFYfUA991nq9qXKXgPi8b0ypRUcLMoKD0pPWF7PYBTkMX3A6IBwBGw1DW\n9bPqRpYM5AMbQTQ9OIOhhn+KfwKBgQDdAROENfF6tgoCOc/yb2INpvSUofnnjgPX\nZztpuTCVlBnjrqCh2qh4Vn8DWD20HS3iEaarjSDVF4AxM6Ca3JaeBxxauWF/auI6\nvAxcxIXP13vvNNFky8+UjYbWq9v0VXqBri2oqvIgJLgnXfjzJpZ50PAlIPtEStcF\n4VORR1zziwKBgQDkm4KQVFjwXovSWu5c5pqCwYu+tXDm2mKekRid7PHHQk6f7cSp\nLdpn1yORC4cmKfFJZtwL7UtDfMYJLD+1GoKQ2FrgW6+odoUOvJQMBtrB5upAMW/G\nr3igWrffSydM+CbapdQkbAsxkVhHbShI84vqtvqmNpNQlLUqJcnqqqkGnwKBgQDZ\nW92eAo/laHSfi8yBXBrL4pBaPpRSsNIGYHmGmaS2+FoeG/nQNgXLlQaGe5r0Ml6W\nIVYTE1JfQiXKPkSPCrT353ZzpC/H6Y9mxNxDwOT6baxurzviLrGSIT+kkpJZ1FgQ\ngwZVBQvtoS+dSEc4nZMRa/VEDxQRLqocFmjiUZWR0QKBgD4ZsWx7DKveedDKfWjg\ncr9w9/x9sdfSariiWuPJ5yC6eGMgCH1bXZYXfGPHZ+hz1COvbN2Jjo9egyxmHPXH\nBWMnTeMDHBpe/ZUkHxLxTv+EFcL9rYEBx84390lvM4+lbgfutT5CUIbVexvZ2Cks\nIf1S5CR/bJcxEj2vUaN/BWYw\n-----END PRIVATE KEY-----\n",
+  "client_email": "ashtanga-yoga-shala@appspot.gserviceaccount.com",
+  "client_id": "112281967574983370874",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ashtanga-yoga-shala%40appspot.gserviceaccount.com"
+}

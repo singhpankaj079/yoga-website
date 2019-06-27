@@ -5,12 +5,43 @@
 <% } %>
 <div class="images">
    <% for (var i=0;i<images.length; i++){ %>
-            <img src = "/<%= images[i].url %>" >
-            
+            <% if (images[i].visibility && (!currentUser || !(currentUser.username==="admin")) ) { %>
+            <img src = "<%= images[i].url %>" ><br>
+            <div style="margin:auto;text-align:center;color: green"><%= images[i].description %></div>
+            <% } %>
               <% if (currentUser && currentUser.username === 'admin') { %>
-                  <form method="post" action="/images/<%= images[i]._id.toString() %>?_method=DELETE" style="width: 60px; margin: auto">
+                   <img src = "<%= images[i].url %>" ><br>
+                   <div style="margin:auto;text-align:center;color: green"><%= images[i].description %></div>
+                  <form method="post" action="/images/<%= images[i]._id.toString() %>?_method=DELETE" style="width: 60px; margin-left: 40vw ;display:inline-block">
                        <input style ="width: 100%; height: 22px" type = "submit" value="Delete">
                   </form>
+                 <% var vis=true, slide=true;  if (images[i].visibility) vis=true;else vis=false; if (images[i].slideshow) slide=true;else slide=false; %>
+                 
+
+                
+                    <button style="margin:auto"> 
+                    <a href = "/images/<%= images[i]._id.toString() %>/togglevisibility" style = "color:
+                    inherit;">
+                     <% if (vis) { %>
+                        Hide
+                    <% } else { %>
+                       Make visible
+                    <% } %>
+                    </a>
+                    </button>
+
+                    <button style="margin:auto"> 
+                    <a href = "/images/<%= images[i]._id.toString() %>/toggleslideshow" style = "color:
+                    inherit;">
+                     <% if (slide) { %>
+                    remove from slideshow
+                    <% } else { %>
+                    add to slideshow
+                    <% } %>
+                    </a>
+                    </button>
+                 
+
      <% } %>
 
         
@@ -30,7 +61,8 @@
 
   <div class = "form" style="margin-top: 0px">
       <h1 style="text-align: center; color:purple"> UPLOAD IMAGE </h1>
-	  <input name="filetoupload" type="file" ><br>
+	  <input name="filetoupload" type="file" style="margin: auto"><br>
+    <input name="description" type="text" placeholder="Description"style="width: 80%; margin:auto"><br>
 	  <input type=submit value="UPLOAD">
      
   </div>
