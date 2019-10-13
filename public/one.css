@@ -547,8 +547,9 @@ input[type="submit"] {
 }
 
 .picture img {
-	max-height: 400px;
+	max-height: 600px;
 	max-width: 800px;
+	margin: auto;
 }
 
 #previousbutton {
@@ -607,7 +608,7 @@ input[type="submit"] {
     }
     .picture img{
         
-    	width: 90vw;
+    	width: 95vw;
     }
 }
 

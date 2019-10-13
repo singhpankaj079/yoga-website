@@ -72,8 +72,12 @@ function getPublicUrl (filename) {
 }
 
 var Storage = multer.memoryStorage();
+
+
 // UPLOAD OBJECT (CREATING AN ARRAY)
+
 var upload = multer({storage: Storage}).single('filetoupload');
+
 
 // TO PASS 'user' OBJECT TO ALL THE EJS TEMPLATES
 
@@ -238,6 +242,7 @@ router.get('/images/:id/togglevisibility', middlewareObj.isAdmin, function(req, 
        
    });
 });
+
 
 // SUBMITTING THE JOIN FORM
 

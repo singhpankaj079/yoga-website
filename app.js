@@ -14,7 +14,8 @@ var session = require('express-session');
 var articleRoutes = require('./articles');
 var indexRoutes = require('./index');
 var authRoutes = require('./auth');
-var flash =require('connect-flash');
+var flash = require('connect-flash');
+
 
 // INCLUDING THE MODELS
 
@@ -59,10 +60,10 @@ app.use(passport.session());
 
 // mongoose.set('debug', true);
  //mongoose.connect(process.env.DATABASEURL, {useNewUrlParser: true});
-  // mongoose.connect("mongodb://localhost/yoga", {useNewUrlParser: true});
+  mongoose.connect("mongodb://localhost/yoga", {useNewUrlParser: true});
 var ObjectId = mongoose.Types.ObjectId;
 
-mongoose.connect('mongodb://localhost/yoga',{useNewUrlParser: true});
+//mongoose.connect('mongodb://localhost/yoga',{useNewUrlParser: true});
 
 // SETTING UP THE ROUTES
 
@@ -72,8 +73,8 @@ app.use(authRoutes);
 
 
 // STARTING THE SERVER
-// , process.env.IP
-app.listen(3000, process.env.IP, (req, res) => {
+// , process.env.IP process.env.PORT
+app.listen(3000 , process.env.IP, (req, res) => {
     console.log('server is listening');
 });
 

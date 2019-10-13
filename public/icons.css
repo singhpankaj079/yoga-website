@@ -30,3 +30,15 @@
 	color: #b61919;
 	height: 40px;
 }
+.instagram {
+	background-color: #e1306c;
+	display: block;
+	height: 40px;
+	color: white;
+}
+.instagram:hover {
+	background-color: white;
+	display: block;
+	height: 40px;
+	color: #e1306c;
+}
