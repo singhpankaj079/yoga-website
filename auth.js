@@ -17,14 +17,14 @@ router.use(function(req, res, next){
 // SIGN UP FORM
 
 router.get('/signup', function(req, res){
-  res.render('signup');
+  res.render('signup', {metaContent: 'Ashtanga yoga center, bareilly | Signup'});
 });
 
 
 // LOGIN FORM
 
 router.get('/login', function(req, res){
-   res.render('login');
+   res.render('login', {metaContent: 'Ashtanga yoga center, bareilly | Login'});
 });
 
 

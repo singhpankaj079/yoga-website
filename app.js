@@ -58,9 +58,8 @@ app.use(passport.session());
 
 // SETTING UP THE MONGOOSE
 
-// mongoose.set('debug', true);
- //mongoose.connect(process.env.DATABASEURL, {useNewUrlParser: true});
-  mongoose.connect("mongodb://localhost/yoga", {useNewUrlParser: true});
+//mongoose.set('debug', true);
+mongoose.connect("mongodb+srv://singhpankaj079:Rj5AMPM%2E%2E@ashtanga-yoga-shala-s8cfb.mongodb.net/test?retryWrites=true&w=majority", {useNewUrlParser: true});
 var ObjectId = mongoose.Types.ObjectId;
 
 //mongoose.connect('mongodb://localhost/yoga',{useNewUrlParser: true});
@@ -74,7 +73,7 @@ app.use(authRoutes);
 
 // STARTING THE SERVER
 // , process.env.IP process.env.PORT
-app.listen(3000 , process.env.IP, (req, res) => {
+app.listen(3000, process.env.IP, (req, res) => {
     console.log('server is listening');
 });
 

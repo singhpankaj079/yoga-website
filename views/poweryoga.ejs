@@ -1,36 +1,121 @@
 
 
-<% include partials/header.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Ashtanga yoga, center, Bareilly">
+   
+    <meta name="description" content="power yoga">
+    
+
+     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/one.css">
+    <link rel="stylesheet" type="text/css" href="/icons.css">
+    <script async type="text/javascript" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="text/javascript" src="/jquery-1.js"></script>
+    <script type="text/javascript" src="/one.js"></script>
+    <title>Ashtanga Yog</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-2674441986648803",
+          enable_page_level_ads: true
+     });
+</script>
+</head>
+<body >
+    <script> AOS.init({
+     duration: 500,
+     once: true
+    }); </script>
+	<div class="navbar">  
+    <ul class= "hamburger" onclick="menu()">
+       <li class="bar"></li>
+       <li class= "bar"></li>
+       <li class= "bar"></li>
+
+    </ul>
+   		<ul class="nav">
+            <!-- <a href="/"><li class="navbar-header">   MOHANYOGA   </li></a> -->
+            <a href="/"><li>  Home  </li> </a>
+			<!-- <a href="yogavid.html"><li> Yoga videos </li></a><a href="ashtanga.html"><li>Ashtanga Yoga</li></a><li>Power Yoga</li><li>  -->
+			<!-- Traditional Yoga </li><li> Discussion</li> -->
+			<a href = "/ourcenter" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
+            <a href = "/videos" ><li> Videos </li></a>
+            <a href= "/images"><li>Images</li></a>
+            <% if (!currentUser) { %>
+            <a href = "/signup" ><li> Sign up </li></a>
+            <a href = "/login" ><li> Login </li></a>
+             <% } else { %>                
+            <a href = "/logout" ><li> Logout </li></a>
+            <a href= "/profiles/<%= currentUser.username %>"><li> '<%= currentUser.username %>' </li></a>
+            <% } %>
+		      </ul>                
+        
+
+            </div>                  
+
+ <ul class="menu" type="none" style="display:none">
+            <!-- <a href="/"><li class="navbar-header">   MOHANYOGA   </li></a> -->
+            <a href="/"><li>  Home  </li> </a>
+            <a href = "/ourcenter" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
+            <a href = "/videos" ><li> Videos </li></a>
+            <a href= "/images"><li>Images</li></a>
+            <% if (!currentUser) { %>
+            <a href = "/signup" ><li> Sign up </li></a>
+            <a href = "/login" ><li> Login </li></a>
+             <% } else { %>
+            <a href = "/logout" ><li> Logout </li></a>
+            <a href= "/profiles/<%= currentUser.username %>"><li>'<%= currentUser.username %>' </li></a>
+            <% } %>
+    </ul>
+
+<br>
+<br>
+
+<% include partials/icons.ejs %>
+<% if (error.length) { %>
+<h1 style = "background-color: #ffc2c2; color: red; text-align: center; width: 90%; margin: auto; font-size: 1.0em; margin-top:42px"> <%= error %> </h1>
+<% } %>
+
+
 
 
 <div class="left">
-<div class="container">
-    
-    <div class="title"> <h2>POWER YOGA </h2></div>
+    <div class="container">
+        
+        <div class="title"> <h2>POWER YOGA </h2></div>
 
-<p class="first-para">
+    <p class="first-para">
 
-Power Yoga is another style of yoga which has Ashtanga Yoga as its roots.It is a series of intense workout that will make you
-sweat. It is similar to the traditional Ashtanga Yoga practice, you have to hold each pose for about five minutes before moving
-through a Vinyasa. These poses are a little bit harder to hold.
-</p>
-<p>
-It is quite effective in improving the physical strength of the body. You need to make effort to it which is not that easy
-task to do.
-</p>
+    Power Yoga is another style of yoga which has Ashtanga Yoga as its roots.It is a series of intense workout that will make you
+    sweat. It is similar to the traditional Ashtanga Yoga practice, you have to hold each pose for about five minutes before moving
+    through a Vinyasa. These poses are a little bit harder to hold.
+    </p>
+    <p>
+    It is quite effective in improving the physical strength of the body. You need to make effort to it which is not that easy
+    task to do.
+    </p>
 
-<!-- <iframe  class="video" src="https://www.youtube.com/embed/rLu9iWfTeWw?autoplay=0"></iframe> -->
-<!-- <video width="420vw" height="300vw" style="margin:auto; display:block" controls> -->
-    <!-- <source src="video.mp4" type="video/mp4"></video> -->
+    <!-- <iframe  class="video" src="https://www.youtube.com/embed/rLu9iWfTeWw?autoplay=0"></iframe> -->
+    <!-- <video width="420vw" height="300vw" style="margin:auto; display:block" controls> -->
+        <!-- <source src="video.mp4" type="video/mp4"></video> -->
 
+    <br>
+
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
 <br>
 
-</div>
 
 
 
-
-
-
-
+ 
 <% include partials/footer.ejs %> 

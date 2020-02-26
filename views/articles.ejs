@@ -3,14 +3,15 @@
  <% for (var i = 0; i<articles.length; i++) { %>
  <% if (articles[i].new === 'yes') { %>
   <div class = "post" >
-  <h2 style ="text-align:center; color: blue"> <%= articles[i].title %> 
-  
+	  <h2 style ="text-align:center; color: #000880"> <%= articles[i].title %>   
 
-  </h2>
- <% if (articles[i].image !=="") { %>
-    <img src = "<%= articles[i].image %>" >
- <% } %> 
-  <p> <%- articles[i].highlight %> <a href = "/articles/<%= articles[i]._id.toString() %>">Read more</a></p>
+	  </h2>
+	 <% if (articles[i].image !=="") { %>
+	    <img style = "width: 200px; margin-left: 20px;" src = "<%= articles[i].image %>" alt = "<%= articles[i].title %>">
+	 <% } %>
+
+	 <% var title = articles[i].title.replace(/ /g, "-") %>
+	  <p> <%- articles[i].description %> <a href = "/articles/<%= articles[i]._id.toString() %>/<%= title.toLowerCase() %>">Read more</a></p>
   </div>
   <% } %>
   <% } %>
@@ -22,5 +23,4 @@
 <% } %>
 </div>
 
-  </body>
-  </html>
+<% include partials/footer.ejs %>

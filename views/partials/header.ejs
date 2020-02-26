@@ -1,19 +1,39 @@
 <!DOCTYPE html>
+<html>
 <head>
-	<meta charset="UTF-8">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-147422199-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-147422199-2');
+    </script>
+
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Ashtanga yog, center, Bareilly">
+    <meta name="keywords" content="Ashtanga yoga, center, Bareilly">
+    <% if (typeof metaContent !== 'undefined') { %>
+    <meta name="description" content="<%= metaContent %>">
+    <% } else { %>
+    <meta name="description" content="Ashtanga yoga, center, asana">
+    <% } %>
 
-    <meta name="description" content="Ashtanga Yog, Bareilly">
-
-     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/one.css">
-    <link rel="stylesheet" type="text/css" href="/icons.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/one.css" type = "text/css" rel = "stylesheet">
     <script type="text/javascript" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script type="text/javascript" src="/jquery-1.js"></script>
-    <script type="text/javascript" src="/one.js"></script>
-    <title>Ashtanga Yog</title>
+    <script  type="text/javascript" src="/jquery-1.js"></script>
+
+
+    <% if (typeof metaContent !== 'undefined') { %>
+    <title><%= metaContent %></title>
+    <% }else { %>
+    <title>Ashtanga Yoga</title>
+    <% } %>
+
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({
@@ -21,51 +41,71 @@
           enable_page_level_ads: true
      });
 </script>
+
+<script>
+    function menu() {
+        var menu = $('.menu')[0];
+        if (menu.style.display !=='none') {
+            menu.style.display = 'none';
+        } else {
+            menu.style.display = 'block';
+        }
+    }
+
+    function toggleDisplay(className) {
+        var obj = "." + className; 
+        if ($(obj).css('display') =='none') {
+            $(obj).css('display','block');
+            window.scrollBy(0, 80);
+        }
+        else $(obj).css('display','none');
+
+    }
+</script>
+
+
+
 </head>
 <body >
     <script> AOS.init({
      duration: 500,
      once: true
     }); </script>
-	<div class="navbar">  
+    <div class="navbar">  
     <ul class= "hamburger" onclick="menu()">
        <li class="bar"></li>
        <li class= "bar"></li>
        <li class= "bar"></li>
 
     </ul>
-   		<ul class="nav">
+        <ul class="nav">
             <!-- <a href="/"><li class="navbar-header">   MOHANYOGA   </li></a> -->
             <a href="/"><li>  Home  </li> </a>
-			<!-- <a href="yogavid.html"><li> Yoga videos </li></a><a href="ashtanga.html"><li>Ashtanga Yoga</li></a><li>Power Yoga</li><li>  -->
-			<!-- Traditional Yoga </li><li> Discussion</li> -->
-			<a href = "/ourcenter" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
+            <!-- <a href="yogavid.html"><li> Yoga videos </li></a><a href="ashtanga.html"><li>Ashtanga Yoga</li></a><li>Power Yoga</li><li>  -->
+            <!-- Traditional Yoga </li><li> Discussion</li> -->
+            <a href = "/ourcenter" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
             <a href = "/videos" ><li> Videos </li></a>
             <a href= "/images"><li>Images</li></a>
-            <a href= "/faqs"><li>FAQs</li></a>
-             <% if (!currentUser) { %>
+            <% if (!currentUser) { %>
             <a href = "/signup" ><li> Sign up </li></a>
             <a href = "/login" ><li> Login </li></a>
              <% } else { %>                
             <a href = "/logout" ><li> Logout </li></a>
             <a href= "/profiles/<%= currentUser.username %>"><li> '<%= currentUser.username %>' </li></a>
             <% } %>
-		</ul>                
-        <% if (currentUser && currentUser.username === 'admin') { %> 
-        <a href="/joinrequests" style="float:right; padding-top:4px;font-size: 1.2rem; margin-right: 8px"><div class="button" style="width: 180px; margin-right: 18px">Join Requests</div> </a> 
-        <% } else { %>
-        <a href="/join" style="float:right; padding-top:4px;font-size: 1.2rem; margin-right: 18px"><div class="button" style="padding: 4px">Join Now</div> </a>
-        <% } %>
+            
+        </ul> 
+                       
+        
 
-            </div>                  
-
+    </div>                  
+     
  <ul class="menu" type="none" style="display:none">
             <!-- <a href="/"><li class="navbar-header">   MOHANYOGA   </li></a> -->
             <a href="/"><li>  Home  </li> </a>
             <a href = "/ourcenter" title="Ashtanga Yoga Shala, Bareilly"><li>  Our Center  </li> </a>
             <a href = "/videos" ><li> Videos </li></a>
             <a href= "/images"><li>Images</li></a>
-            <a href= "/faqs"><li>FAQs</li></a>
             <% if (!currentUser) { %>
             <a href = "/signup" ><li> Sign up </li></a>
             <a href = "/login" ><li> Login </li></a>
@@ -74,7 +114,6 @@
             <a href= "/profiles/<%= currentUser.username %>"><li>'<%= currentUser.username %>' </li></a>
             <% } %>
     </ul>
-
 <br>
 <br>
 

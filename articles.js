@@ -8,6 +8,71 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 var Comments = require('./models/comment');
 var middlewareObj = require('./middleware');
+var multer = require('multer');
+var fs = require('fs');
+const Gcloud = require("@google-cloud/storage");
+
+const gstorage =  new Gcloud.Storage({projectId: 'ashtanga-yoga-shala'});
+// gstorage.projectId='ashtanga-yoga-shala';
+const bucket = gstorage.bucket('ashtanga-yoga-shala');
+
+
+// SETTING UP THE STORAGE FOR THE UPLOADED FILES
+/*
+var Storage = multer.diskStorage({
+  destination: function(req, file, callback){
+    callback(null, './public/images');
+   },
+   filename: function(req, file, callback){
+    callback(null, file.originalname);
+   }
+});
+*/
+var datenow;
+// MIDDLEWARE TO UPLOAD IMAGES TO GOOGLE CLOUD STORAGE
+
+function sendUploadToGCS (req, res, next) {
+  if (!req.file) {
+    return next();
+  }
+  datenow= Date.now();
+  const gcsname = datenow + req.file.originalname;
+  const file = bucket.file(gcsname);
+
+  const stream = file.createWriteStream({
+    metadata: {
+      contentType: req.file.mimetype
+    },
+    resumable: false
+  });
+
+  stream.on('error', (err) => {
+    req.file.cloudStorageError = err;
+    next(err);
+  });
+
+  stream.on('finish', () => {
+    req.file.cloudStorageObject = gcsname;
+    file.makePublic().then(() => {
+      req.file.cloudStoragePublicUrl = getPublicUrl(gcsname)+ "?key=AIzaSyCCgPFXD7dVfWvKF5ltT7cyxJ5dx-cmbj0";
+      next();
+    });
+  });
+
+  stream.end(req.file.buffer);
+}
+
+
+function getPublicUrl (filename) {
+  return 'https://storage.googleapis.com/ashtanga-yoga-shala/' + filename;
+}
+
+var Storage = multer.memoryStorage();
+
+
+// UPLOAD OBJECT (CREATING AN ARRAY)
+
+var upload = multer({storage: Storage}).single('filetoupload');
 
 //TO PASS 'user' OBJECT TO ALL THE EJS TEMPLATES
 
@@ -20,9 +85,9 @@ router.use(function(req, res, next){
 // LIST OF ALL THE ARTICLES
 
 router.get('/', function(req, res){
-	Articles.find({}, function(err, foundart){
-		if (err) console.log(err);
-	    else res.render('articles', {articles: foundart});	
+    Articles.find({}, function(err, foundart){
+        if (err) console.log(err);
+        else res.render('articles', {articles: foundart, metaContent: 'Yoga articles'});    
 });
 });
 
@@ -30,22 +95,7 @@ router.get('/', function(req, res){
 // FORM FOR POSTING A NEW ARTICLE
 
 router.get('/new', middlewareObj.isAdmin, function(req, res){
-	res.render('newarticle');
-});
-
-
-// SHOWING THE ARTICLE WITH CORRESPONDING COMMENTS 
-
-router.get("/:id", function(req, res){
-	 var id = ObjectId(req.params.id.toString());
-    Articles.findById(id).populate('comments').exec( function(err, obje){
-    	if (err)console.log(err);
-    	else {
-
-    		res.render('show',{ article: obje, comments: obje.comments});
-    		
-    	}
-    });
+    res.render('newarticle');
 });
 
 
@@ -54,26 +104,80 @@ router.get("/:id", function(req, res){
 router.get('/:id/edit', middlewareObj.isAdmin, function(req, res){
     var id = ObjectId(req.params.id.toString());
     Articles.findById(id, function(err, obje){
-    	if (err)console.log(err);
-    	else {
-    		res.render('edit',{article: obje});
-    		
-    	}
+        if (err)console.log(err);
+        else {
+            res.render('edit',{article: obje, metaContent: 'Ashtanga yoga center, bareilly | Edit article'});
+            
+        }
+    });
+});
+
+
+// SHOWING THE ARTICLE WITH CORRESPONDING COMMENTS 
+
+router.get("/:id", function(req, res){
+     var id = ObjectId(req.params.id.toString());
+    Articles.findById(id, function(err, found){
+        if (err) console.log(err);
+        else res.redirect('/articles/'+ req.params.id.toString() + '/' + found.title.replace(/ /g, "-").toLowerCase());
+    })
+});
+
+// SHOWING THE ARTICLE WITH CORRESPONDING COMMENTS 
+
+router.get("/:id/:title", function(req, res){
+     var id = ObjectId(req.params.id.toString());
+    Articles.findById(id).populate('comments').exec( function(err, obje){
+        if (err)console.log(err);
+        else {
+
+            res.render('show',{ article: obje, comments: obje.comments, metaContent: obje.description});
+            
+        }
+    });
+});
+
+// HIDING IMAGE FROM THE ARTICLE
+
+router.get("/articleImage/:id/hide", function(req, res){
+
+    Articles.updateOne({_id: ObjectId(req.params.id)}, { $set: {showImageInArticle: false}}, function(err, updated){
+        if (err) console.log(err);
+        else res.redirect('/articles/' + req.params.id.toString());
+    });
+});
+
+
+// SHOWING IMAGE IN THE ARTICLE
+
+router.get("/articleImage/:id/show", function(req, res){
+
+    Articles.updateOne({_id: ObjectId(req.params.id)}, { $set: {showImageInArticle: true}}, function(err, updated){
+        if (err) console.log(err);
+        else res.redirect('/articles/' + req.params.id.toString());
     });
 });
 
 
 // POSTING AN ARTICLE
 
-router.post('/', middlewareObj.isAdmin, function(req, res){
-	req.body.newart.content = req.sanitize(req.body.newart.content);
-	var newart = req.body.newart;
-	newart.highlight = newart.content.substring(0 , 150)+ '...';
-	newart.new = 'yes';
-	Articles.create(newart, function(err, obj){
-		if (err) console.log(err);
-		else res.redirect('/articles');
-	});
+router.post('/', middlewareObj.isAdmin, upload, sendUploadToGCS,function(req, res){
+    req.body.newart.content = req.body.newart.content;
+    var newart = req.body.newart;
+    newart.new = 'yes';
+    if (req.file && req.cloudStoragePublicUrl){
+        newart.image = getPublicUrl(datenow + req.file.originalname);
+        newart.imageTitle = datenow + req.file.originalname;
+        newart.showImageInArticle = true;
+    } else {
+        newart.showImageInArticle = false;
+        newart.image = "";
+        newart.imageTitle = "";
+    }
+    Articles.create(newart, function(err, obj){
+        if (err) console.log(err);
+        else res.redirect('/articles');
+    });
 
 });
 
@@ -84,17 +188,17 @@ router.post('/:id/comment', middlewareObj.isLoggedIn, function(req, res){
     var id = ObjectId(req.params.id.toString());
     req.body.comment.author = req.user.username;
     Comments.create(req.body.comment, function(err, comment){
-    	if (err) console.log(err);
-    	else {
-    		Articles.findById(id, function(err, article){
-    			if (err) console.log(err);
-    			else {
-    				       article.comments.push(comment);
+        if (err) console.log(err);
+        else {
+            Articles.findById(id, function(err, article){
+                if (err) console.log(err);
+                else {
+                           article.comments.push(comment);
                    article.save(function(err){if (err) console.log(err)});
                    res.redirect('/articles/'+ req.params.id.toString());
-    			}
-    		});
-    	}
+                }
+            });
+        }
     });
 });
 
@@ -158,16 +262,19 @@ router.put('/:aid/comments/:cid', function(req, res){
 
 // UPDATING THE ARTICLE
 
-router.put('/:id', middlewareObj.isAdmin, function(req, res){
-    req.body.newart.content = req.sanitize (req.body.newart.content);
-     newart = req.body.newart;
-     newart.highlight = newart.content.substring(0, 150) + '...';
-     
-
+router.put('/:id', middlewareObj.isAdmin,upload, sendUploadToGCS,function(req, res){
+    req.body.newart.content = req.body.newart.content;
+    newart = req.body.newart;
+    if (req.file && req.file.cloudStoragePublicUrl){
+        newart.image = getPublicUrl(datenow + req.file.originalname);
+        newart.imageTitle = datenow + req.file.originalname;
+        newart.showImageInArticle = true;
+    } 
+    
      var id = ObjectId(req.params.id.toString());
      Articles.updateOne({_id: id}, newart, function(err, obj){
-     	if (err) console.log(err);
-     	else res.redirect('/articles/' + req.params.id.toString()); 
+        if (err) console.log(err);
+        else res.redirect('/articles/' + req.params.id.toString() + '/' +  newart.title.replace(/ /g, "-").toLowerCase()); 
      });
 });
 
@@ -175,8 +282,8 @@ router.put('/:id', middlewareObj.isAdmin, function(req, res){
 // DELETING THE ARTICLE
 
 router.delete('/:id', middlewareObj.isAdmin, function(req, res){
-	
-	
+    
+    
     var id = ObjectId(req.params.id.toString());
     Articles.deleteOne({_id: id}, function(err, obj){
        if (err) console.log(err);
@@ -200,5 +307,28 @@ router.delete('/:aid/comments/:cid', middlewareObj.checkCommentOwnership, functi
     res.redirect('/articles/' + req.params.aid);
 });
 
+
+// DELETING THE ARTICLE IMAGE
+
+router.delete('/articleImage/:id/delete', function(req, res){
+    Articles.findById(req.params.id, function(err, found){
+        if (err)console.log(err);
+        else {
+            if (found && found.imageTitle){
+            var file = bucket.file(found.imageTitle);
+            file.delete(function(err, apiresponse){
+                if (err) console.log(err);
+                else {
+                    Articles.updateOne({_id: req.params.id}, {$set: {image: "", imageTitle: ""}}, function(err, deleted){
+                        if (err) console.log(err);
+                    });
+                }
+            });
+        }
+        }
+    });
+    res.redirect('/articles/');
+    
+});
 
 module.exports = router;

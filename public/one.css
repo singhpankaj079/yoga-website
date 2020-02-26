@@ -18,12 +18,19 @@ p {
 	margin-right: 5%;
 
 }
+pre {
+	padding: 1% 3% 0% 3%;
+	color: black;
+	margin-top: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
 .imargin {
 	margin-left: 8%;
 }
 html {
 	margin-right: 0px;
-    height: 100vh;
+    min-height: 100vh;
     scroll-behavior: smooth;
 }
 .center {
@@ -180,8 +187,6 @@ hr {
 .right {
 	width: 60%;
 	margin: auto;
-	
-
 }
 .aside {
 	/*border: 2px solid #f0ecec;*/
@@ -194,16 +199,14 @@ hr {
 	box-sizing: border-box;
 	margin: auto;
 	margin-top: 20px;
-	background-color: white;
-	
-	
+	background-color: white;	
 }
 .lh {
-	background-color: #0d0034;
-	font-size: 0.9rem;
+	font-size: 1.2rem;
+	color: white;
 }
 .li {
-	background-color: #82828266;
+	
 }
 .aside ul {
 	padding-left: 0px;
@@ -216,7 +219,7 @@ hr {
 }
 .acontent {
 	font-size: 1rem;
-	color: #000;
+	color: #ffffff;
 }
 .jumbotron {
 	width:100vw;
@@ -237,13 +240,12 @@ hr {
 
 
 .button {
-	user-select: none;
-	
+	user-select: none;	
 	border-radius:8px;
 	text-align: center;
 	color: #230326;
 	/*font-weight:700;*/
-	display: inline-block;	
+	display: block;	
 	background-color: rgb(19,136,251,1);
     transition: transform 0.1s;
     /*width: 100px;*/
@@ -258,17 +260,18 @@ hr {
 h1 {
 	transition: transform 0.1s;
 	box-sizing: border-box;
-
 }
 h1:hover {
-	transform: 
+	
 }
 .animation-element {
 
 }
 h3 {
-	margin-bottom: 1%;
-	color: green;
+	margin: auto;
+	margin-bottom: 0%;
+	text-align: center;
+	color: #000880;
 }
 h2 li {
 	display:inline-block;
@@ -321,10 +324,12 @@ iframe {
 	box-sizing: border-box;
 }
 .footer {
-     margin: auto;
-	 background-color: #fafbff;
-     
-
+	width : 100%;
+    background-color: #000000;
+	margin-bottom: 0px;
+	padding-bottom: 100px;
+	padding-top: 50px;
+	
 }
 
 .videotitle {
@@ -369,6 +374,7 @@ i {
 	margin-top: 10vw;
 	width: 60%;
 	height: 40vw;
+	box-sizing: border-box;
 }
 
 form {
@@ -426,8 +432,8 @@ input[type="submit"] {
 	position: fixed;
 }
 
-.time ,.centers, .address, .queries {
-	display: none;
+.time, .centers, .address, .queries {
+	
 }
 .post {
 	 width: 80%;
@@ -454,7 +460,7 @@ input[type="submit"] {
   color: #0b2d89;
  }
 .article {
-	width: 80%;
+	width: 95%;
 	margin: auto;
 	margin-top: 40px;
 	border: 1px solid white;
@@ -463,7 +469,7 @@ input[type="submit"] {
 
 .article-content {
 	border: 1px solid white;
-	width: 90%;
+	width: 95%;
 	margin: auto;
 }
 
@@ -547,8 +553,9 @@ input[type="submit"] {
 }
 
 .picture img {
-	max-height: 600px;
-	max-width: 800px;
+	height: 40vh;
+	max-height: 400px;
+	max-width: 600px;
 	margin: auto;
 }
 
@@ -577,10 +584,35 @@ input[type="submit"] {
 	opacity: 0.5;
 
 }
+.footer-one {
+	width:30%;
+	text-align: center;
+	padding-top: 10px;
+	display: inline-block;
+    float: left;
+    margin: auto;
+    margin-bottom: 0px;
+}
+.footer-two {
+	width:30%;
+	text-align: center;
+	padding-top: 10px;
+	display: inline-block;
+	float: left;
+	margin: auto;
+    margin-bottom: 0px;
+}
+.footer-three {
+	width:30%;
+	text-align: center;
+	padding-top: 10px;
+	display: inline-block;
+	margin: auto;
+	margin-bottom: 0px;	
+}
 @media screen and (max-width:800px) {
 	.left {
 		width: 95%;
-		float: none;
 		margin: auto;
 		margin-top: 2%;
 	}
@@ -610,6 +642,32 @@ input[type="submit"] {
         
     	width: 95vw;
     }
+    .footer-one {
+    	width: 80%;
+    	float: none;
+    	display: block;
+    	margin: auto;
+    }
+    .footer-two {
+    	width: 80%;
+    	float: none;
+    	display: block;
+    	margin: auto;
+    }
+    .footer-three {
+    	width: 80%;
+    	float: none;
+    	display: block;
+    	margin: auto;
+    }
+    .nav {
+		display:none;
+	}
+	.hamburger {
+		display: inline-block;
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
 }
 
 @media screen and (max-width:480px){
@@ -633,15 +691,82 @@ input[type="submit"] {
 	input[type="password"]{
 		width: 240px;
 	}
-
+    .footer-one {
+    	width: 80%;
+    	float: none;
+    	display: block;
+    	margin: auto;
+    }
+    .footer-two {
+    	width: 80%;
+    	float: none;
+    	display: block;
+    	margin: auto;
+    }
+    .footer-three {
+    	width: 80%;
+    	float: none;
+    	display: block;
+    	margin: auto;
+    }
 }
-@media screen and (max-width:800px) {
-	.nav {
-		display:none;
-	}
-	.hamburger {
-		display: inline-block;
-		margin-top: 0px;
-		margin-bottom: 0px;
-	}
+
+
+
+
+.facebook {
+	background-color: blue;
+	color: white;
+	display: block; height: 40px;
+}
+.twitter {
+	background-color: #00aeff;
+	display: block; height: 40px;
+	color : white;
+}
+.youtube {
+	background-color: #b61919;
+	display: block;
+	height: 40px;
+	color: white;
+}
+.facebook:hover {
+	background-color: white ;
+	color: blue;
+	height: 40px;
+}
+
+.twitter:hover {
+	background-color: white ;
+	color: #00aeff;
+	height: 40px;
+}
+.youtube:hover {
+	background-color: white;
+	color: #b61919;
+	height: 40px;
+}
+.instagram {
+	background-color: #e1306c;
+	display: block;
+	height: 40px;
+	color: white;
+}
+.instagram:hover {
+	background-color: white;
+	display: block;
+	height: 40px;
+	color: #e1306c;
+}
+.linkedin {
+	background-color: #0077b5;
+	display: block;
+	height: 40px;
+	color: white;
+}
+.linked:hover {
+	background-color: white;
+	display: block;
+	height: 40px;
+	color: #e1306c;
 }

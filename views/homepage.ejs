@@ -1,83 +1,173 @@
-
 <% include partials/header.ejs %>
+
 <% include partials/jumbo.ejs %>
 
 
 <% if (success.length) { %>
-<h1 style = "background-color: #e1fae1; color: green; text-align: center; width: 90%; margin: auto; font-size: 1.0em; margin-top:42px"> <%= success %> </h1>
+  <h1 style = "background-color: #e1fae1; color: green; text-align: center; width: 90%; margin: auto; font-size: 1.0em; margin-top:42px"> <%= success %> </h1>
 <% } %>
 <div class="slideshow">
-	
+  
 
-	<% for (var i=0;i<images.length;i++){ %>
-             <div class="picture fade">
-                     <img src = "<%= images[i].url %>" onmouseenter="stopShow()" onmouseleave="startShow()">	    
+  <% for (var i=0;i<images.length;i++){ %>
+              <div class="picture fade">
+                      <img src = "<%= images[i].url %>" onmouseenter="stopShow()" onmouseleave="startShow()">     
                       <% if (images[i].description) { %>
-                      <div class="slideshowtext"><%= images[i].description %></div>
+                        <div class="slideshowtext">
+                            <%= images[i].description %>
+                        </div>
                       <% } %>
                       <span style="position: absolute; top:0px; left: 5%"> <%= i+1%> / <%= images.length %> </span>   
-	         </div>
-	
+              </div>
+  
 
-<% } %>
+  <% } %>
 
-      <button id="previousbutton" onclick="nextSlide()">&#10094</button>
-	  <button id="nextbutton" onclick="previousSlide()">&#10095</button>
+<button id="previousbutton" onclick="previousSlide()">&#10094</button>
+<button id="nextbutton" onclick="nextSlide()">&#10095</button>
 
 </div>
-
 
 <br>
 <hr style="max-width: 600px">
-
-<div class="left">
-
-<div class="container">
-  <h1 style="text-align:center;color:purple;"><pre style="letter-spacing:2px"> <i class="fa fa-clock-o" style="display:inline;font-size:20px"></i> Timings </pre></h1>
-       <ul type="none" style="text-align: center; margin:auto; padding:0px">
-           
-        <li><h2 style="color:green">Ashtanga Yoga</h2></li>
-        <li> 8:15 - 9:30 am</li>
-        <li>5:15 - 6:30 pm</li>
-        <hr style="width: 200px">
-        <li><h2 style="color:green">Power Yoga</h2></li>
-        <li> 7:30 - 8:15 am</li>
-        <hr style="width: 200px">
-        <li><h2 style="color:green">Traditional Yoga</h2></li>
-        <li> 6:45 - 7:30 am</li>
-        </ul>
-
+<div class = "left">
+    <div class="margin-auto" data-aos="fade-left">
+        <div class="container center">
+            <div class="title">
+                <h2>Articles</h2>
+            </div>
+            <% for (var i = 0; i < articles.length && i < 5; i++){  %>
+                 <% var title = articles[i].title.replace(/ /g, "-") %>
+                <div style="min-height: 150px">
+                        <a href="/articles/<%= articles[i]._id.toString()%>/<%= title.toLowerCase()  %>"><h3> <%= articles[i].title %> </h3>    
+                          <% if (articles[i].image) { %>  
+                         
+                          <img style = "width: 200px;float: left; margin-left: 20px;margin-right:10px" src="<%= articles[i].image %>" alt = "<%= articles[i].title %>">               
+                          <% } %>
+                          
+                        </a>
+                       
+                        <p style="text-align: left;"><%- articles[i].description %> <a href="/articles/<%= articles[i]._id.toString() %>/<%= title.toLowerCase() %>" > Read more </a>
+                        </p>
+                </div>
+            <% } %>
+        </div>
+        <button class="button" style = "margin: auto"> 
+            <a href = "/articles" style = "color: inherit">Read more articles</a>
+        </button>
+        <% if ( currentUser && currentUser.username === 'admin') { %>
+            <button class="button"> <a href = "/articles/new" style = "color: inherit">Contribute an article</a></button>
+        <% } %>
+    </div>
 </div>
-
-<div class="container" data-aos="fade-left">
-	
-	<div class="title"> <h2>WHAT IS YOGA? </h2></div>
-     <img src='yoga.jpeg' style="box-sizing: border-box">
-<p>
-
-Yoga is an art native to India which is very beneficial for the health of our body,mind and soul.
-It keeps our body fit,mind relaxed and soul peaceful.
-</p>
-
-<p>
-
-Postural yoga has been studied and recommended to promote relaxation, reduce stress and improve some medical conditions such as
-premenstrual syndrome. This form of yoga provides the same benefit as "any well-designed excercise program, increasing general health
-and stamina, reducing stress and improving those conditions brought about by sedentary lifestyle".It is particularly promoted as a
-physical therapy routine, and as a regime to strengthen and balance all parts of the body. 
-</p>
-<p>
-At our center we teach mainly three styles 
-of yoga which are some of the most populest forms of yoga namely- Traditional Yoga, Power Yoga and 
-Ashtanga Yoga.
-You can join our center for treatment of hypertension(high blood pressure), obesity, depression or for general fitness.Many people who have joined our center have been greatly benefitted.
-</p> 
-
 <br>
+<hr style="max-width: 600px">
+<div class="right">
+<div class="aside">
+        Yoga Videos
+        <p>These are some of the yoga videos. To watch more beneficial videos for your health you can find a link <a  target="_blank" href="https://www.youtube.com/channel/UCpRVMZKYCPRJilBmEg-Ak8w" style="color:blue">here</a> </p>
 
+    <% for (var i = 0; i<Math.min(10,videos.length); i++) { %>
+    <br>
+    <iframe  class="video" allowfullscreen="" src= "<%= videos[i].src %>" ></iframe> 
+    <div class = "videotitle"> <%= videos[i].title %> </div>
+     <% if (currentUser && currentUser.username === 'admin') { %>
+                  <form method="post" action="/videos/<%= videos[i]._id.toString() %>?_method=DELETE" style="width: 60px;float: right">
+                       <input style ="width: 100%; height: 22px" type = "submit" value="Delete">
+                  </form>
+     <% } %>
+    <br>
+    <% } %>
+    <br>
+    <button class="button" style = "margin: auto"> 
+            <a href = "/videos" style = "color: inherit">Watch More Videos</a>
+    </button>
+     </div>
 </div>
 
-<script> slideShow();</script>
+
+
+
+
+<script>
+    var images;
+    var index = 0;
+    var timeout;
+
+    function slideShow(){
+        images = document.getElementsByClassName("picture");
+        images[index].style.display ="none";
+        index = (index+1)%images.length;
+        images[index].style.display="block";
+        timeout=setTimeout(slideShow , 3000);
+
+    }
+
+    function stopShow(){
+        clearTimeout(timeout);
+    }
+    function startShow(){
+        timeout = setTimeout(slideShow, 3000);
+    }
+
+    function previousSlide(){
+        clearTimeout(timeout);
+        images[index].style.display="none";
+        index=(index-2+images.length)%images.length;
+        slideShow();
+    }
+
+    function nextSlide(){
+        clearTimeout(timeout);
+        slideShow();
+    }
+
+    slideShow();
+</script>
+
+<div class = "left">
+    <div class="container animationelement" data-aos="fade-right">
+        <div class="title">
+            <h2>STYLES OF YOGA TAUGHT IN OUR CENTER</h2>
+        </div>
+        <div  class="styles">
+            <h3>Ashtanga Yoga</h3>
+            <% if (false) { %>
+                    <a href="/ashtanga">      <div class="thumbnails border"> <img src='image1.jpg'></div></a>
+                <% } %>
+            
+            <p>Ashtanga Vinyasa Yoga was created by K. Pattabhi Jois during the 20th century, often promoted as a modern-day form of classical Indian yoga....<a href="/ashtanga">Read more</a></p>
+
+            <hr>
+
+            <h3 >Power Yoga</h3>
+
+
+            <% if (false) { %>
+                <a href="/poweryoga">    <div class="thumbnails border"><img src='image1.jpg'> </div></a>
+            <% } %>
+
+
+            <p>Power Yoga is another style of yoga which has Ashtanga Yoga as its root....<a href="/poweryoga">Read more</a></p>
+
+            <hr>
+
+
+            <h3 class="imargin">Traditional Yoga</h3>
+
+
+            <% if (false) { %>
+                <a href="/traditional"><div class="thumbnails border"><img src='image1.jpg'></div></a>
+            <% } %>
+
+
+            <p> Traditional Yoga.. <a href="/traditional">Read more</a></p>
+
+        </div>
+    </div>
+</div>
+
+
 <% include partials/footer.ejs %>
  
 

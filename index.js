@@ -2,7 +2,7 @@
 // IMPORTING REQUIRED PACKAGES
 
 var express = require('express');
-var router = express.Router({mergeParams: true});
+var router = express.Router({mergeParamas: true});
 var passport = require('passport');
 var Articles = require('./models/article');
 var Videos = require('./models/video');
@@ -17,7 +17,7 @@ var ObjectId = mongoose.Types.ObjectId;
 var multer = require('multer');
 var fs = require('fs');
 const Gcloud = require("@google-cloud/storage");
-
+var request = require('request');
 const gstorage =  new Gcloud.Storage({projectId: 'ashtanga-yoga-shala'});
 // gstorage.projectId='ashtanga-yoga-shala';
 const bucket = gstorage.bucket('ashtanga-yoga-shala');
@@ -41,7 +41,7 @@ function sendUploadToGCS (req, res, next) {
   if (!req.file) {
     return next();
   }
-   datenow= Date.now();
+  datenow= Date.now();
   const gcsname = datenow + req.file.originalname;
   const file = bucket.file(gcsname);
 
@@ -67,6 +67,8 @@ function sendUploadToGCS (req, res, next) {
 
   stream.end(req.file.buffer);
 }
+
+
 function getPublicUrl (filename) {
   return 'https://storage.googleapis.com/ashtanga-yoga-shala/' + filename;
 }
@@ -90,15 +92,20 @@ router.use(function(req, res, next){
 // HOMEPAGE
 
 router.get('/', function(req, res) {
-	  Articles.find({}, function(err, articles){
-  	if (err) console.log(err);
-  	else {
-      Images.find({slideshow: true}, function(err, images){
-    if (err) console.log(err);
-    else res.render('homepage', { articles: articles, images: images});
+    Videos.find({}, function(err, videos){
+  if (err)console.log(err);
+  else {
+      Articles.find({}, function(err, articles){
+      if (err) console.log(err);
+      else {
+        Images.find({slideshow: true}, function(err, images){
+      if (err) console.log(err);
+      else res.render('homepage', { articles: articles, images: images, videos: videos});
    });
-      
-  }
+  
+}
+  });
+   } 
 });
 });
 
@@ -106,10 +113,10 @@ router.get('/', function(req, res) {
 // ASHTANGA YOGA
 
 router.get('/ashtanga', function(req, res) {
-		
+    
   Articles.find({}, function(err, articles){
-  	if (err) console.log(err);
-  	else res.render('ashtanga', {articles: articles});
+    if (err) console.log(err);
+    else res.render('ashtanga', {articles: articles, metaContent: 'Ashtanga yoga'});
   });
    
 });
@@ -118,10 +125,10 @@ router.get('/ashtanga', function(req, res) {
 // POWER YOGA
 
 router.get('/poweryoga', function(req, res) {
-		
+    
   Articles.find({}, function(err, articles){
-  	if (err) console.log(err);
-  	else res.render('poweryoga', {articles: articles});
+    if (err) console.log(err);
+    else res.render('poweryoga', {articles: articles, metaContent: 'Power yoga'});
   });
    
 });
@@ -132,23 +139,46 @@ router.get('/poweryoga', function(req, res) {
 router.get('/traditional', function(req, res){
  Articles.find({}, function(err, articles){
     if (err) console.log(err);
-    else res.render('traditional', {articles: articles});
+    else res.render('traditional', {articles: articles, metaContent: 'Traditional yoga'});
   });
 })
+
+
 // VIDEOS
 
 router.get('/videos', function(req, res){
   Videos.find({}, function(err, videos){
   if (err)console.log(err);
-  res.render('videos', {videos: videos});
+  res.render('videos', {videos: videos, metaContent: 'Yoga videos'});
   });
 });
 
 
+// FETCH VIDEOS FROM YOUTUBE
+
+router.get('/videos/fetch', function(req, res){
+  request("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&channelId=UCpRVMZKYCPRJilBmEg-Ak8w&order=viewCount&key=AIzaSyCCgPFXD7dVfWvKF5ltT7cyxJ5dx-cmbj0",{json:true},(err, res, body)=>{
+    var items  = body.items;
+    Videos.deleteMany({}, function(err, deleted){
+      if (err)console.log(err);
+    });
+    var videos = [];
+    for (let i = 0;i<items.length;i++){
+        videos.push({ title: items[i].snippet.title, src: "https://youtube.com/embed/" + items[i].id.videoId, channelTitle: items[i].snippet.channelTitle});
+    }
+    Videos.insertMany(videos, function(err, inserted){
+      if (err) console.log(err);
+      
+    });
+    
+  });
+  res.redirect('/videos');
+});
+
 // FORM FOR JOINING THE CENTER
 
 router.get('/join', middlewareObj.isLoggedIn, function(req, res){
-  	res.render('form');
+    res.render('form', { metaContent: 'Form'});
 });
 
 
@@ -185,26 +215,22 @@ router.get('/joinrequests', middlewareObj.isAdmin, function(req, res){
 // ABOUT OUR CENTER
 
 router.get('/ourcenter', function(req, res){
-  res.render('ourcenter');
+  res.render('ourcenter', { metaContent: 'Ashtanga yoga center, bareilly'});
 });
 
 
-// FAQs
+// ABOUT OUR TEACHER
 
-router.get('/faqs', function(req, res){
-  Faqs.find({}, function(err, found){
-      if (err) console.log(err);
-      else res.render('faqs', {faqs: found});
-  })
+router.get('/ourteacher', function(req, res){
+  res.render('ourteacher', { metaContent: 'Ashtanga yoga center, bareilly | Our Teacher'});
 });
-
 
 // IMAGES
 
 router.get('/images', function(req, res){
    Images.find({}, function(err, images){
     if (err) console.log(err);
-    else res.render('images', {images: images});
+    else res.render('images', {images: images, metaContent: 'Yoga Images'});
    });
 });
 
@@ -243,7 +269,11 @@ router.get('/images/:id/togglevisibility', middlewareObj.isAdmin, function(req, 
    });
 });
 
+// SENDING robots.txt FILE
 
+router.get('/robots.txt', function(req, res){
+  res.sendFile(__dirname + "/robots.txt");
+})
 // SUBMITTING THE JOIN FORM
 
 router.post('/join', middlewareObj.isLoggedIn, function(req, res){
@@ -262,7 +292,7 @@ router.post('/join', middlewareObj.isLoggedIn, function(req, res){
 
    request.username = req.user.username;
      Joinrequests.create(request, function(err){
-	    	if (err) console.log(err);
+        if (err) console.log(err);
     });
      req.flash('success','Join request successfully submitted!!');
     res.redirect('/join');
@@ -295,21 +325,20 @@ router.post('/faqs', middlewareObj.isAdmin, function(req, res){
 
 router.post('/images', middlewareObj.isAdmin, upload, sendUploadToGCS, function(req, res){
       if (req.file && req.file.cloudStoragePublicUrl){
-         var image ={ title: datenow + req.file.originalname, url: getPublicUrl(datenow + req.file.originalname)};
+         var image = { title: datenow + req.file.originalname, url: getPublicUrl(datenow + req.file.originalname)};
       image.visibility=true;
       image.slideshow =true;
-      image.description=req.body.description;
+      image.description = req.body.description;
       //console.log(req);
-      console.log("here");
       Images.create(image, function(err, saved){
-        if (err) res.render('Something went wrong');
-});
+        if (err) res.send('Something went wrong');
+      });
 
       req.flash('success', 'file uploaded successfully!!');
       res.redirect('/images');
       }
     else {
-      res.render('Something went wrong');
+      res.send('Something went wrong');
     }
   
 });
@@ -379,4 +408,5 @@ router.delete('/images/:id', middlewareObj.isAdmin, function(req, res){
       }
     });
 });
+
 module.exports = router;

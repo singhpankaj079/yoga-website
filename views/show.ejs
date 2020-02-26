@@ -1,13 +1,24 @@
 <% include partials/header.ejs %>
 
 <div class="article">
-      <h2 style ="text-align:center; color: blue"> <%= article.title %> </h2>
+      <h2 style ="text-align:center; color: #000880"> <%= article.title %> </h2>
      
  <div class="article-content">
- <% if (article.image !=="") { %>
-        <img src = "<%= article.image %>" >
+ <% if (currentUser && currentUser.username ==='admin' && article.image !=="") { %>
+        <img src = "<%= article.image %>" alt = "<%= article.title %>">
+        <form method="post" action = "/articles/articleImage/<%= article._id.toString() %>/delete?_method=DELETE">
+            <input type = "submit" value= "Delete Image">
+        </form>
+
+        <% if (!article.showImageInArticle) { %>
+          <a href = "/articles/articleImage/<%= article._id.toString() %>/show"><button>Make Image Visible</button></a>
+        <% } else { %>
+          <a href = "/articles/articleImage/<%= article._id.toString() %>/hide"><button>Make Image Invisible</button></a>
+        <% } %>
+ <% } else if (article.image !=="" && article.showImageInArticle) { %>
+        <img src = "<%= article.image %>" alt = "<%= article.title %>">
      <% } %> 
-      <p> <%- article.content %></p>
+      <pre> <%- article.content %></pre>
  </div>
 <div style="width: 80%; margin: auto; margin-bottom: 20px; height: 22px">
        <% if (currentUser && currentUser.username === 'admin') { %>
@@ -32,7 +43,7 @@
                        <form class="<%= "edit-comment" + i.toString() %>"  style="display: none"method="post" action="/articles/<%= article._id.toString() %>/comments/<%=comments[i]._id.toString()%>?_method=PUT" >
                            <textarea style= "width: 100%; border: 1px solid blue" name="text" ><%= comments[i].text %></textarea>
                             <input type="submit" value="Edit comment" class="edit">
-                   </form> 
+                       </form> 
                  </div>
                  
                      <% if (currentUser && currentUser.username === comments[i].author) { %>
@@ -129,5 +140,4 @@
   
 
 
-  </body>
-  </html>
+<% include partials/footer.ejs %>

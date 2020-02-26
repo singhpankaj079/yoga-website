@@ -13,14 +13,15 @@ middlewareObj.isLoggedIn = function (req, res, next){
       return next();
     else {
       req.flash('error', 'Please login first!!');
-    	res.redirect('/login');
-    	}
+      res.redirect('/login');
+      }
 }
 
 
 // isAdmin MIDDLEWARE
 
 middlewareObj.isAdmin = function (req, res, next){
+ // console.log(req.isAuthenticated + " " + req.user.username);
   if (req.isAuthenticated() && req.user.username === 'admin')
     return next();
   else res.send('SORRY YOU DON\'T HAVE THE PERMISSION TO DO SO' );
@@ -30,12 +31,12 @@ middlewareObj.isAdmin = function (req, res, next){
 // checkCommentOwnership MIDDLEWARE
 
 middlewareObj.checkCommentOwnership = function(req, res, next){
-	Comments.findById(ObjectId(req.params.cid), function(err, comment){
+  Comments.findById(ObjectId(req.params.cid), function(err, comment){
     if (err) console.log(err);
-	  else if (req.user && comment.author === req.user.username )
-			next();
-		else res.send('Either you are not logged in or you don\'t have the required permission');
-	});
+    else if (req.user && comment.author === req.user.username )
+      next();
+    else res.send('Either you are not logged in or you don\'t have the required permission');
+  });
 
 };
 

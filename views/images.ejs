@@ -53,7 +53,7 @@
 
 
 <% } %>
-<div>
+</div>
 
 
 <% if (currentUser && currentUser.username==='admin') { %>
@@ -61,11 +61,12 @@
 
   <div class = "form" style="margin-top: 0px">
       <h1 style="text-align: center; color:purple"> UPLOAD IMAGE </h1>
-	  <input name="filetoupload" type="file" style="margin: auto"><br>
+    <input name="filetoupload" type="file" style="margin: auto"><br>
     <input name="description" type="text" placeholder="Description"style="width: 80%; margin:auto"><br>
-	  <input type=submit value="UPLOAD">
+    <input type=submit value="UPLOAD">
      
   </div>
 </form>
 <% } %>
 
+<% include partials/footer.ejs %>

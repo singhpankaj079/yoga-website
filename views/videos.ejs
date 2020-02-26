@@ -1,5 +1,7 @@
 <% include partials/header.ejs %>
 
+
+
 <div class="right">
 <div class="aside">
         YOGA VIDEOS
@@ -19,18 +21,21 @@
      </div>
 </div>
 <% if ( currentUser && currentUser.username === 'admin') { %>
+<div style = "margin-top: 50px;margin-bottom: 100px">
 <form method="post" action = "/videos" style = "margin: auto">
 
   <div class = "form">
       <h1 style="text-align: center; color:purple"> ADD VIDEO </h1> 
-	  <input name="video[title]" type="text" placeholder="Title" title="Title" required><br>
-	  <input name="video[src]" type="text" placeholder="Video url" title="Video url" required><br>
-	  <input type="submit" value="ADD VIDEO">
+    <input name="video[title]" type="text" placeholder="Title" title="Title" required><br>
+    <input name="video[src]" type="text" placeholder="Video url" title="Video url" required><br>
+    <input type="submit" value="ADD VIDEO">
   </div>
 </form>
+<button class = "button" style="margin:auto;display:block"><a style = "color:blue"href="/videos/fetch">Fetch Videos From Youtube</a></button>
+</div>
 
 
 
 <% } %>
-</body>
-</html>
+
+<% include partials/footer.ejs %>
