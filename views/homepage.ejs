@@ -30,21 +30,20 @@
 
 <br>
 <hr style="max-width: 600px">
-<div class = "left">
-    <div class="margin-auto" data-aos="fade-left">
-        <div class="container center">
+<div class = "left" style = "width: 100%">
+    <div class="margin-auto" data-aos="fade-left" style = "width: 100%">
+        <div class="container center" style = "background-color: black">
             <div class="title">
                 <h2>Articles</h2>
             </div>
-            <% for (var i = 0; i < articles.length && i < 5; i++){  %>
+            <% for (var i = 0; i < articles.length && i < 6; i++){  %>
                  <% var title = articles[i].title.replace(/ /g, "-") %>
-                <div style="min-height: 150px">
+                <div style="border: 0.02rem solid #eee8e8;width:300px;height: 305px;border-radius:0.2rem;display:inline-block;margin:20px">
                         <a href="/articles/<%= articles[i]._id.toString()%>/<%= title.toLowerCase()  %>"><h3> <%= articles[i].title %> </h3>    
                           <% if (articles[i].image) { %>  
-                         
-                          <img style = "width: 200px;float: left; margin-left: 20px;margin-right:10px" src="<%= articles[i].image %>" alt = "<%= articles[i].title %>">               
-                          <% } %>
-                          
+                         <div style = "background-image: url('<%= articles[i].image %>'); background-repeat: no-repeat;background-size: cover;background-position:center;height:200px;width:300px;"">
+                         </div>
+                         <% } %>           
                         </a>
                        
                         <p style="text-align: left;"><%- articles[i].description %> <a href="/articles/<%= articles[i]._id.toString() %>/<%= title.toLowerCase() %>" > Read more </a>

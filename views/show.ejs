@@ -3,7 +3,7 @@
 <div class="article">
       <h2 style ="text-align:center; color: #000880"> <%= article.title %> </h2>
      
- <div class="article-content">
+<div class="article-content">
  <% if (currentUser && currentUser.username ==='admin' && article.image !=="") { %>
         <img src = "<%= article.image %>" alt = "<%= article.title %>">
         <form method="post" action = "/articles/articleImage/<%= article._id.toString() %>/delete?_method=DELETE">
@@ -15,10 +15,10 @@
         <% } else { %>
           <a href = "/articles/articleImage/<%= article._id.toString() %>/hide"><button>Make Image Invisible</button></a>
         <% } %>
- <% } else if (article.image !=="" && article.showImageInArticle) { %>
+<% } else if (article.image !=="" && article.showImageInArticle) { %>
         <img src = "<%= article.image %>" alt = "<%= article.title %>">
-     <% } %> 
-      <pre> <%- article.content %></pre>
+<% } %> 
+      <pre style = "white-space: pre-wrap; text-align: justify; text-justify: inter-word;"> <%- article.content %></pre>
  </div>
 <div style="width: 80%; margin: auto; margin-bottom: 20px; height: 22px">
        <% if (currentUser && currentUser.username === 'admin') { %>
