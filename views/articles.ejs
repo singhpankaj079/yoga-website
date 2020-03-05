@@ -8,10 +8,10 @@
             </div>
             <% for (var i = 0; i < articles.length; i++){  %>
                  <% var title = articles[i].title.replace(/ /g, "-") %>
-                <div style="border: 0.02rem solid #eee8e8;width:300px;height: 305px;border-radius:0.2rem;display:inline-block;margin:20px">
+                <div style="border: 0.02rem solid #eee8e8;width:300px;box-sizing:border-box;border-radius:0.2rem;display:inline-block;margin:20px">
                         <a href="/articles/<%= articles[i]._id.toString()%>/<%= title.toLowerCase()  %>"><h3> <%= articles[i].title %> </h3>    
                           <% if (articles[i].image) { %>  
-                         <div style = "background-image: url('<%= articles[i].image %>'); background-repeat: no-repeat;background-size: cover;background-position:center;height:200px;width:300px;"">
+                         <div style = "background-image: url('<%= articles[i].image %>'); background-repeat: no-repeat;background-size: cover;background-position:center;height:200px;width:300px;">
                          </div>
                          <% } %>           
                         </a>
