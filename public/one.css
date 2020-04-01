@@ -177,7 +177,8 @@ hr {
 }
 .title {
 	padding-left:3%;
-	color: purple;
+	padding-top: 2px;
+	color: #006d20;
 	text-align: center;
 	transition: transform 0.1s;
 }
@@ -271,10 +272,10 @@ h3 {
 	margin: auto;
 	margin-bottom: 0%;
 	text-align: center;
-	color: #000880;
+	color: #ff1d1d;
 }
 h2 li {
-	display:inline-block;
+		display:inline-block;
 	  padding-left:8px;
 	  padding-right:8px;
 
@@ -304,6 +305,7 @@ h2 {
 	margin-top:4%;
 	font-size: 1.2rem;
 	transition: transform 0.2s;
+	color: #ff1d1d;
 }
 h2:hover {
 
@@ -335,7 +337,6 @@ iframe {
 .videotitle {
 	color: black;
 	margin-top: 0px;
-	text-decoration: underline;
 	display: inline-block;
 	padding:4px;
 	box-sizing:border-box;
@@ -490,7 +491,7 @@ input[type="submit"] {
 	width: 100%;
 	/*min-height: 50vh; */
 	text-align: center;
-	background-color: #5a0080;
+	background-color: #238600;
 	margin-top: 0px;
 	border-radius: 0px;
 	color: white;
@@ -676,6 +677,12 @@ input[type="submit"] {
 		margin-top: 0px;
 		margin-bottom: 0px;
 	}
+	.article-video {
+		width: 100%;
+	}
+	.article-content {
+		width: 100%;
+	}
 }
 
 @media screen and (max-width:480px){
@@ -717,6 +724,12 @@ input[type="submit"] {
     	display: block;
     	margin: auto;
     }
+    .article-video {
+    	width: 100%;
+    }
+    .article-content {
+		width: 100%;
+	}
 }
 
 

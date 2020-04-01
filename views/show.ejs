@@ -1,7 +1,7 @@
 <% include partials/header.ejs %>
 
 <div class="article">
-      <h2 style ="text-align:center; color: #000880"> <%= article.title %> </h2>
+      <h2 style ="text-align:center;"> <%= article.title %> </h2>
      
 <div class="article-content">
  <% if (currentUser && currentUser.username ==='admin' && article.image !=="") { %>
@@ -19,7 +19,12 @@
         <img src = "<%= article.image %>" alt = "<%= article.title %>">
 <% } %> 
       <pre style = "white-space: pre-wrap; text-align: justify; text-justify: inter-word;"> <%- article.content %></pre>
+
  </div>
+
+
+
+
 <div style="width: 80%; margin: auto; margin-bottom: 20px; height: 22px">
        <% if (currentUser && currentUser.username === 'admin') { %>
                   <form method="post" action="/articles/<%= article._id.toString() %>?_method=DELETE" style="width: 60px;float: right">
@@ -33,7 +38,7 @@
       
 </div>
 </div>
-     <h2 style="text-align: center; margin-top: 10px;text-decoration: underline"> Comments</h2>
+     <h2 style="text-align: center; color: black;margin-top: 10px;text-decoration: underline"> Comments</h2>
      <% for (var i = 0 ; i < comments.length; i++) { %>
 
 
