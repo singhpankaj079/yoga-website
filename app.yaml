@@ -2,7 +2,7 @@ runtime: nodejs10
 env: standard
 
 env_variables:
-  "DATABASEURL": "mongodb+srv://singhpankaj079:Rj5AMPM%2E%2E@ashtanga-yoga-shala-s8cfb.mongodb.net/test?retryWrites=true&w=majority"
+  "DATABASEURL":
   "GOOGLE_APPLICATION_CREDENTIALS": "./ashtanga.json"
 
 handlers:
